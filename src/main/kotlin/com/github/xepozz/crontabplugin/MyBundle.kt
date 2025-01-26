@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template
+package com.github.xepozz.crontabplugin
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
