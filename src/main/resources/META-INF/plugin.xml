@@ -9,12 +9,14 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.xepozz.crontabplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <fileType
                 name="Crontab File"
                 implementationClass="com.github.xepozz.crontab.language.CrontabFileType"
                 fieldName="INSTANCE"
                 language="Crontab"
                 extensions=""/>
+        <lang.parserDefinition
+                language="Crontab"
+                implementationClass="com.github.xepozz.crontab.language.parser.CrontabParserDefinition"/>
     </extensions>
 </idea-plugin>

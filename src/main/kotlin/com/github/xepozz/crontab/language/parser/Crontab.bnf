@@ -1,0 +1,33 @@
+{
+  parserClass="com.github.xepozz.crontab.language.parser.CrontabParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Crontab"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.xepozz.crontab.language.psi"
+  psiImplPackage="com.github.xepozz.crontab.language.psi.impl"
+
+  elementTypeHolderClass="com.github.xepozz.crontab.language.psi.CrontabTypes"
+  elementTypeClass="com.github.xepozz.crontab.language.psi.CrontabElementType"
+  tokenTypeClass="com.github.xepozz.crontab.language.psi.CrontabTokenType"
+}
+
+crontabFile ::= item_*
+
+private item_ ::= (cronExpression | COMMENT | NEWLINE)
+
+cronExpression ::= (SCHEDULE COMMAND)
+{
+    pin=1
+}
+
+SCHEDULE ::= (TIME_POINTER+)
+{
+    pin=1
+}
+private TIME_POINTER ::= ((STAR SLASH NUMBER) | STAR | NUMBER)
+
+COMMAND ::= CONTENT
+
+COMMENT ::= SINGLE_COMMENT
