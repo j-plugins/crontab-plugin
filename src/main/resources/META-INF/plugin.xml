@@ -14,9 +14,18 @@
                 implementationClass="com.github.xepozz.crontab.language.CrontabFileType"
                 fieldName="INSTANCE"
                 language="Crontab"
-                extensions=""/>
+                extensions="crontab,cron"
+        />
         <lang.parserDefinition
                 language="Crontab"
                 implementationClass="com.github.xepozz.crontab.language.parser.CrontabParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="Crontab"
+                implementationClass="com.github.xepozz.crontab.language.CrontabSyntaxHighlighterFactory"/>
+        <annotator
+                language="Crontab"
+                implementationClass="com.github.xepozz.crontab.language.CrontabAnnotator"/>
+        <multiHostInjector
+                implementation="com.github.xepozz.crontab.language.CrontabLanguageInjector"/>
     </extensions>
 </idea-plugin>

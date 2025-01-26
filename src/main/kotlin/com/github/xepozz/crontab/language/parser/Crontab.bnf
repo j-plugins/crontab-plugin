@@ -26,8 +26,13 @@ SCHEDULE ::= (TIME_POINTER+)
 {
     pin=1
 }
-private TIME_POINTER ::= ((STAR SLASH NUMBER) | STAR | NUMBER)
+
+TIME_POINTER ::= ((STAR SLASH NUMBER) | STAR | NUMBER)
 
 COMMAND ::= CONTENT
+{
+    implements=["com.intellij.psi.PsiLanguageInjectionHost"]
+    extends="com.github.xepozz.crontab.language.psi.impl.CrontabCommandBaseImpl"
+}
 
 COMMENT ::= SINGLE_COMMENT
