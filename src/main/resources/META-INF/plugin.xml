@@ -37,4 +37,13 @@
                 language="Crontab"
                 implementationClass="com.github.xepozz.crontab.ide.CrontabCommenter"/>
     </extensions>
+    <actions>
+        <action id="Crontab.OpenCrontabGuruAction" popup="false"
+                class="com.github.xepozz.crontab.ide.actions.OpenCrontabGuruAction"
+                text="Open in Crontab Guru"
+                description="Opens the schedule in the crontab.guru service"
+                icon="/icons/cron/pluginIcon.svg">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
