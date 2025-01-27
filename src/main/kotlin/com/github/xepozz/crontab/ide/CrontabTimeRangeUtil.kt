@@ -28,6 +28,7 @@ object CrontabTimeRangeUtil {
     }
 
     fun collapseRanges(input: List<String>): List<String> {
+        if (input.isEmpty()) return emptyList()
         val numbers = expandRanges(input)
 
         // Sort the numbers and then collapse ranges
@@ -61,6 +62,7 @@ object CrontabTimeRangeUtil {
     }
 
     fun expandRanges(input: List<String>): Set<Int> {
+        if (input.isEmpty()) return emptySet()
         val numbers = mutableSetOf<Int>()
 
         // Parse the input and collect all individual numbers and ranges
