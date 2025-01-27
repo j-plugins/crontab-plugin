@@ -18,15 +18,16 @@
 
 <!-- Plugin description -->
 
-## Crontab Expressions
+## Cron &amp; Crontab Support
 
 Crontab syntax support:
 
 - Schedule periods and errors highlighting
-- Shell command completion
+- Shell command completions
 - Human-readable schedule folding
-- Cron tester
-- Crontab.guru integration
+- Cron expression tester
+- Cron expression injection
+- [crontab.guru](https://crontab.guru) integration
 
 ## Donation
 
