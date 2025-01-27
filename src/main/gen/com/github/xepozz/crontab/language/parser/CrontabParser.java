@@ -203,6 +203,30 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean VARIABLE_NAME(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VARIABLE_NAME")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, VARIABLE_NAME, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // CONTENT
+  public static boolean VARIABLE_VALUE(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VARIABLE_VALUE")) return false;
+    if (!nextTokenIs(b, CONTENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CONTENT);
+    exit_section_(b, m, VARIABLE_VALUE, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // SCHEDULE COMMAND
   public static boolean cronExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cronExpression")) return false;
@@ -229,14 +253,30 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // cronExpression | COMMENT | NEWLINE
+  // cronExpression | variableDefinition | COMMENT | NEWLINE
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
     r = cronExpression(b, l + 1);
+    if (!r) r = variableDefinition(b, l + 1);
     if (!r) r = COMMENT(b, l + 1);
     if (!r) r = consumeToken(b, NEWLINE);
     return r;
+  }
+
+  /* ********************************************************** */
+  // VARIABLE_NAME EQUAL_SIGN VARIABLE_VALUE
+  public static boolean variableDefinition(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "variableDefinition")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, VARIABLE_DEFINITION, null);
+    r = VARIABLE_NAME(b, l + 1);
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, EQUAL_SIGN));
+    r = p && VARIABLE_VALUE(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
 }

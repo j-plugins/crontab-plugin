@@ -1,6 +1,8 @@
 package com.github.xepozz.crontab.language
 
 import com.github.xepozz.crontab.language.psi.CrontabSchedule
+import com.github.xepozz.crontab.language.psi.CrontabVariableName
+import com.github.xepozz.crontab.language.psi.CrontabVariableValue
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
@@ -18,6 +20,23 @@ class CrontabAnnotator : Annotator {
                     .create()
             }
 
+//        CrontabTypes.VARIABLE_NAME -> IDENTIFIER_KEYS
+//        CrontabTypes.VARIABLE_VALUE -> STRING_KEYS
+//        CrontabTypes.EQUAL_SIGN -> OPERATION_KEYS
+            is CrontabVariableName -> {
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(element.textRange)
+                    .textAttributes(IDENTIFIER_HIGHLIGHT)
+                    .create()
+            }
+
+            is CrontabVariableValue -> {
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(element.textRange)
+                    .textAttributes(STRING_HIGHLIGHT)
+                    .create()
+            }
+
 //            is CrontabCommand -> {
 //                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
 //                    .range(element.textRange)
@@ -31,6 +50,18 @@ class CrontabAnnotator : Annotator {
         private val SCHEDULE_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
             "CRONTAB_SCHEDULE",
             DefaultLanguageHighlighterColors.FUNCTION_DECLARATION,
+        )
+        private val IDENTIFIER_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
+            "CRONTAB_IDENTIFIER",
+            DefaultLanguageHighlighterColors.IDENTIFIER,
+        )
+        private val STRING_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
+            "CRONTAB_STRING",
+            DefaultLanguageHighlighterColors.STRING,
+        )
+        private val OPERATION_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
+            "CRONTAB_OPERATION",
+            DefaultLanguageHighlighterColors.OPERATION_SIGN,
         )
 //        private val COMMAND_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
 //            "CRONTAB_COMMAND",

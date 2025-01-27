@@ -15,9 +15,11 @@ class CrontabLanguageInjector : MultiHostInjector {
 
         when (element) {
             is CrontabCommand -> {
-                registrar.startInjecting(shellLanguage)
-                    .addPlace(null, null, element, TextRange(0, element.textLength))
-                    .doneInjecting()
+                if (element.textLength > 0) {
+                    registrar.startInjecting(shellLanguage)
+                        .addPlace(null, null, element, TextRange(0, element.textLength))
+                        .doneInjecting()
+                }
             }
         }
     }

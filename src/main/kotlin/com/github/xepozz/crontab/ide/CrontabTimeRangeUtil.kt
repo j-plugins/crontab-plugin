@@ -28,8 +28,8 @@ object CrontabTimeRangeUtil {
     }
 
     fun collapseRanges(input: List<String>): List<String> {
-        if (input.isEmpty()) return emptyList()
         val numbers = expandRanges(input)
+        if (numbers.isEmpty()) return emptyList()
 
         // Sort the numbers and then collapse ranges
         val sortedNumbers = numbers.sorted()

@@ -16,6 +16,7 @@ class CrontabSyntaxHighlighter : SyntaxHighlighterBase() {
 //        CrontabTypes.SCHEDULE -> COMMENT_KEYS
 //        CrontabTypes.TIME_POINTER -> CONSTANT_KEYS
 //        CrontabTypes.COMMAND -> KEYWORD_KEYS
+        CrontabTypes.EQUAL_SIGN -> OPERATION_KEYS
 
         CrontabTypes.COMMENT -> COMMENT_KEYS
         TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
@@ -27,14 +28,11 @@ class CrontabSyntaxHighlighter : SyntaxHighlighterBase() {
             HighlighterColors.BAD_CHARACTER,
         )
 
-        //        private val KEYWORD_KEYS = arrayOf(
-//            DefaultLanguageHighlighterColors.KEYWORD
-//        )
-//        private val CONSTANT_KEYS = arrayOf(
-//            DefaultLanguageHighlighterColors.CONSTANT
-//        )
         private val COMMENT_KEYS = arrayOf(
             DefaultLanguageHighlighterColors.DOC_COMMENT
+        )
+        private val OPERATION_KEYS = arrayOf(
+            DefaultLanguageHighlighterColors.OPERATION_SIGN
         )
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
     }

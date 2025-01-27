@@ -17,12 +17,20 @@
 
 crontabFile ::= item_*
 
-private item_ ::= (cronExpression | COMMENT | NEWLINE)
+private item_ ::= (cronExpression | variableDefinition | COMMENT | NEWLINE)
 
 cronExpression ::= (SCHEDULE COMMAND)
 {
     pin=1
 }
+
+variableDefinition ::= (VARIABLE_NAME EQUAL_SIGN VARIABLE_VALUE)
+{
+    pin=1
+    extends="com.github.xepozz.crontab.language.psi.impl.CrontabVariableBaseImpl"
+}
+VARIABLE_NAME ::= IDENTIFIER
+VARIABLE_VALUE ::= CONTENT
 
 SCHEDULE ::= TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER
 {

@@ -20,10 +20,15 @@ public interface CrontabTypes {
   IElementType TIME_POINTER = new CrontabElementType("TIME_POINTER");
   IElementType TIME_RANGE = new CrontabElementType("TIME_RANGE");
   IElementType TIME_RANGE_STEP = new CrontabElementType("TIME_RANGE_STEP");
+  IElementType VARIABLE_DEFINITION = new CrontabElementType("VARIABLE_DEFINITION");
+  IElementType VARIABLE_NAME = new CrontabElementType("VARIABLE_NAME");
+  IElementType VARIABLE_VALUE = new CrontabElementType("VARIABLE_VALUE");
 
   IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
+  IElementType EQUAL_SIGN = new CrontabTokenType("EQUAL_SIGN");
   IElementType HYPHEN = new CrontabTokenType("HYPHEN");
+  IElementType IDENTIFIER = new CrontabTokenType("IDENTIFIER");
   IElementType NEWLINE = new CrontabTokenType("NEWLINE");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
@@ -68,6 +73,15 @@ public interface CrontabTypes {
       }
       else if (type == TIME_RANGE_STEP) {
         return new CrontabTimeRangeStepImpl(node);
+      }
+      else if (type == VARIABLE_DEFINITION) {
+        return new CrontabVariableDefinitionImpl(node);
+      }
+      else if (type == VARIABLE_NAME) {
+        return new CrontabVariableNameImpl(node);
+      }
+      else if (type == VARIABLE_VALUE) {
+        return new CrontabVariableValueImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

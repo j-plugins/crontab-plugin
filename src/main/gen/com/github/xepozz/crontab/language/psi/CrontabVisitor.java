@@ -52,7 +52,19 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitVariableName(@NotNull CrontabVariableName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableValue(@NotNull CrontabVariableValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitCronExpression(@NotNull CrontabCronExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariableDefinition(@NotNull CrontabVariableDefinition o) {
     visitPsiElement(o);
   }
 
