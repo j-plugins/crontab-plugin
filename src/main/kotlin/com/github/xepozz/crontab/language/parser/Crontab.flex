@@ -23,7 +23,6 @@ STAR="*"
 COMMA=","
 NUMBER=[0-9]+
 SLASH="/"
-EQUAL_SIGN="="
 HYPHEN=\-
 
 %state EXPRESSION
@@ -33,7 +32,6 @@ HYPHEN=\-
     {STAR}                 { return CrontabTypes.STAR; }
     {SLASH}                { return CrontabTypes.SLASH; }
     {COMMA}                { return CrontabTypes.COMMA; }
-    {EQUAL_SIGN}           { return CrontabTypes.EQUAL_SIGN; }
     {HYPHEN}               { return CrontabTypes.HYPHEN; }
     {NUMBER}               { return CrontabTypes.NUMBER; }
 //    [a-zA-Z][\w]*          { return CrontabTypes.IDENTIFIER; }
