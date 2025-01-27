@@ -6,6 +6,12 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.util.PsiTreeUtil
 
 object CrontabElementFactory {
+    fun createCrontabTimeList(project: Project, values: List<String>): CrontabTimeList {
+        val file = createFile(project, values.joinToString(","))
+
+        return PsiTreeUtil.findChildOfType(file, CrontabTimeList::class.java) as CrontabTimeList
+    }
+
     fun createCrontabTimeRange(project: Project, first: Int, last: Int): CrontabTimeRange {
         val file = createFile(project, "$first-$last")
 

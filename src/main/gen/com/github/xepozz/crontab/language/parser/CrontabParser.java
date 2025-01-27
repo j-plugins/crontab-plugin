@@ -101,34 +101,32 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NUMBER COMMA TIME_LIST_ITEM (COMMA TIME_LIST_ITEM)*
+  // TIME_LIST_ITEM (COMMA TIME_LIST_ITEM)*
   public static boolean TIME_LIST(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_LIST")) return false;
     if (!nextTokenIs(b, NUMBER)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, TIME_LIST, null);
-    r = consumeTokens(b, 2, NUMBER, COMMA);
-    p = r; // pin = 2
-    r = r && report_error_(b, TIME_LIST_ITEM(b, l + 1));
-    r = p && TIME_LIST_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = TIME_LIST_ITEM(b, l + 1);
+    r = r && TIME_LIST_1(b, l + 1);
+    exit_section_(b, m, TIME_LIST, r);
+    return r;
   }
 
   // (COMMA TIME_LIST_ITEM)*
-  private static boolean TIME_LIST_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_LIST_3")) return false;
+  private static boolean TIME_LIST_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_LIST_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!TIME_LIST_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "TIME_LIST_3", c)) break;
+      if (!TIME_LIST_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "TIME_LIST_1", c)) break;
     }
     return true;
   }
 
   // COMMA TIME_LIST_ITEM
-  private static boolean TIME_LIST_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_LIST_3_0")) return false;
+  private static boolean TIME_LIST_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_LIST_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -138,14 +136,14 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TIME_RANGE | NUMBER
+  // TIME_RANGE | TIME_EXACT
   public static boolean TIME_LIST_ITEM(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_LIST_ITEM")) return false;
     if (!nextTokenIs(b, NUMBER)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = TIME_RANGE(b, l + 1);
-    if (!r) r = consumeToken(b, NUMBER);
+    if (!r) r = TIME_EXACT(b, l + 1);
     exit_section_(b, m, TIME_LIST_ITEM, r);
     return r;
   }
@@ -164,18 +162,16 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TIME_PERIODIC | TIME_RANGE | TIME_RANGE_STEP | TIME_LIST | TIME_ANY | TIME_EXACT
+  // TIME_PERIODIC | TIME_RANGE_STEP | TIME_LIST | TIME_ANY
   public static boolean TIME_POINTER(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_POINTER")) return false;
     if (!nextTokenIs(b, "<time pointer>", NUMBER, STAR)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TIME_POINTER, "<time pointer>");
     r = TIME_PERIODIC(b, l + 1);
-    if (!r) r = TIME_RANGE(b, l + 1);
     if (!r) r = TIME_RANGE_STEP(b, l + 1);
     if (!r) r = TIME_LIST(b, l + 1);
     if (!r) r = TIME_ANY(b, l + 1);
-    if (!r) r = TIME_EXACT(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

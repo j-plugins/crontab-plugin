@@ -29,6 +29,12 @@ public class CrontabTimeListItemImpl extends ASTWrapperPsiElement implements Cro
 
   @Override
   @Nullable
+  public CrontabTimeExact getTimeExact() {
+    return findChildByClass(CrontabTimeExact.class);
+  }
+
+  @Override
+  @Nullable
   public CrontabTimeRange getTimeRange() {
     return findChildByClass(CrontabTimeRange.class);
   }

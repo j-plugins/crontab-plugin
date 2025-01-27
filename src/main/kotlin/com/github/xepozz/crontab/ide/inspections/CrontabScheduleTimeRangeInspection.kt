@@ -1,6 +1,8 @@
 package com.github.xepozz.crontab.ide.inspections
 
+import com.github.xepozz.crontab.ide.CrontabTimeRangeUtil
 import com.github.xepozz.crontab.language.CrontabFile
+import com.github.xepozz.crontab.language.psi.CrontabTimeList
 import com.github.xepozz.crontab.language.psi.CrontabTimeRange
 import com.github.xepozz.crontab.language.psi.CrontabVisitor
 import com.intellij.codeInspection.LocalInspectionTool
@@ -23,6 +25,19 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                     CrontabInspectionUtil.registerSimplifyRange(holder, element)
                 }
                 super.visitTimeRange(element)
+            }
+
+            override fun visitTimeList(element: CrontabTimeList) {
+                val before = element.text
+                val after = CrontabTimeRangeUtil.collapseRanges(element).joinToString(",")
+
+                println("before $before")
+                println("after $after")
+
+                if (before != after) {
+                    CrontabInspectionUtil.registerCollapseRangeList(holder, element)
+                }
+                super.visitTimeList(element)
             }
         }
     }

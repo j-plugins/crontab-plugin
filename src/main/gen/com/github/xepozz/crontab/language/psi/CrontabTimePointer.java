@@ -11,16 +11,10 @@ public interface CrontabTimePointer extends PsiElement {
   CrontabTimeAny getTimeAny();
 
   @Nullable
-  CrontabTimeExact getTimeExact();
-
-  @Nullable
   CrontabTimeList getTimeList();
 
   @Nullable
   CrontabTimePeriodic getTimePeriodic();
-
-  @Nullable
-  CrontabTimeRange getTimeRange();
 
   @Nullable
   CrontabTimeRangeStep getTimeRangeStep();

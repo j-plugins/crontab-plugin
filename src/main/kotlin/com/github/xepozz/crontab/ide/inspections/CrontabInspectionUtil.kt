@@ -1,8 +1,11 @@
 package com.github.xepozz.crontab.ide.inspections
 
+import com.github.xepozz.crontab.ide.CrontabTimeRangeUtil
 import com.github.xepozz.crontab.language.psi.CrontabElementFactory
+import com.github.xepozz.crontab.language.psi.CrontabTimeList
 import com.github.xepozz.crontab.language.psi.CrontabTimeRange
 import com.intellij.codeInspection.ProblemDescriptor
+import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.project.Project
 
@@ -48,6 +51,29 @@ object CrontabInspectionUtil {
                             CrontabElementFactory.createCrontabTimeExact(
                                 project,
                                 psiElement.first,
+                            )
+                        )
+                    }
+                }
+            }
+        )
+    }
+
+    fun registerCollapseRangeList(holder: ProblemsHolder, element: CrontabTimeList) {
+        holder.registerProblem(
+            element,
+            "List of intervals can be collapsed.",
+            ProblemHighlightType.WARNING,
+            object : CrontabScheduleQuickFix() {
+                override fun getName() = "Collapse list"
+
+                override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
+                    val psiElement = descriptor.psiElement as? CrontabTimeList ?: return
+                    if (psiElement.isWritable) {
+                        psiElement.replace(
+                            CrontabElementFactory.createCrontabTimeList(
+                                project,
+                                CrontabTimeRangeUtil.collapseRanges(psiElement),
                             )
                         )
                     }

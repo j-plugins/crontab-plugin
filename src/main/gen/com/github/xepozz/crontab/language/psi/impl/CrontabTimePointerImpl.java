@@ -35,12 +35,6 @@ public class CrontabTimePointerImpl extends ASTWrapperPsiElement implements Cron
 
   @Override
   @Nullable
-  public CrontabTimeExact getTimeExact() {
-    return findChildByClass(CrontabTimeExact.class);
-  }
-
-  @Override
-  @Nullable
   public CrontabTimeList getTimeList() {
     return findChildByClass(CrontabTimeList.class);
   }
@@ -49,12 +43,6 @@ public class CrontabTimePointerImpl extends ASTWrapperPsiElement implements Cron
   @Nullable
   public CrontabTimePeriodic getTimePeriodic() {
     return findChildByClass(CrontabTimePeriodic.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeRange getTimeRange() {
-    return findChildByClass(CrontabTimeRange.class);
   }
 
   @Override
