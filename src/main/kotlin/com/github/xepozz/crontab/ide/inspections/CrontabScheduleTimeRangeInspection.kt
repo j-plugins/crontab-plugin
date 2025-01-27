@@ -19,6 +19,9 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                 if (element.first > element.second) {
                     CrontabInspectionUtil.registerSwapRange(holder, element)
                 }
+                if (element.first == element.second) {
+                    CrontabInspectionUtil.registerSimplifyRange(holder, element)
+                }
                 super.visitTimeRange(element)
             }
         }

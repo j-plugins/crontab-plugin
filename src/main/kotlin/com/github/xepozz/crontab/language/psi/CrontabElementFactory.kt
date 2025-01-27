@@ -11,6 +11,11 @@ object CrontabElementFactory {
 
         return PsiTreeUtil.findChildOfType(file, CrontabTimeRange::class.java) as CrontabTimeRange
     }
+    fun createCrontabTimeExact(project: Project, value: Int): CrontabTimeExact {
+        val file = createFile(project, "$value")
+
+        return PsiTreeUtil.findChildOfType(file, CrontabTimeExact::class.java) as CrontabTimeExact
+    }
 
     fun createFile(project: Project, text: String): CrontabFile {
         val name = "dummy.crontab"

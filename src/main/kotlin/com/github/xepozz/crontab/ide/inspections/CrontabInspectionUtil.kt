@@ -31,4 +31,28 @@ object CrontabInspectionUtil {
             }
         )
     }
+
+    fun registerSimplifyRange(holder: ProblemsHolder, element: CrontabTimeRange) {
+        val interval = "${element.first}"
+
+        holder.registerProblem(
+            element,
+            "Invalid time range. One of intervals can be eliminated.",
+            object : CrontabScheduleQuickFix() {
+                override fun getName() = "Replace with \"$interval\""
+
+                override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
+                    val psiElement = descriptor.psiElement as? CrontabTimeRange ?: return
+                    if (psiElement.isWritable) {
+                        psiElement.replace(
+                            CrontabElementFactory.createCrontabTimeExact(
+                                project,
+                                psiElement.first,
+                            )
+                        )
+                    }
+                }
+            }
+        )
+    }
 }
