@@ -18,11 +18,13 @@ SINGLE_COMMENT=#[^\n]*
 
 WHITESPACE=[ \t]+
 NEWLINE=\r|\n|\r\n
-TEXT=[^ *,/\d\n][^\n]*
+TEXT=[^ \-*,/\d\n][^\n]*
 STAR="*"
 COMMA=","
-NUMBER=[0-9]
+NUMBER=[0-9]+
 SLASH="/"
+EQUAL_SIGN="="
+HYPHEN=\-
 
 %state EXPRESSION
 %%
@@ -31,12 +33,15 @@ SLASH="/"
     {STAR}                 { return CrontabTypes.STAR; }
     {SLASH}                { return CrontabTypes.SLASH; }
     {COMMA}                { return CrontabTypes.COMMA; }
-    {NUMBER}+              { return CrontabTypes.NUMBER; }
+    {EQUAL_SIGN}           { return CrontabTypes.EQUAL_SIGN; }
+    {HYPHEN}               { return CrontabTypes.HYPHEN; }
+    {NUMBER}               { return CrontabTypes.NUMBER; }
+//    [a-zA-Z][\w]*          { return CrontabTypes.IDENTIFIER; }
     {WHITESPACE}+          { return TokenType.WHITE_SPACE; }
     {TEXT}                 { return CrontabTypes.CONTENT; }
 }
 
-{WHITESPACE}+          { return TokenType.WHITE_SPACE; }
-{NEWLINE}              { yybegin(YYINITIAL); return CrontabTypes.NEWLINE; }
+{WHITESPACE}+              { return TokenType.WHITE_SPACE; }
+{NEWLINE}                  { yybegin(YYINITIAL); return CrontabTypes.NEWLINE; }
 
-[^]                              { throw new Error("Illegal character <"+yytext()+">"); }
+[^]                        { throw new Error("Illegal character <"+yytext()+">"); }

@@ -72,17 +72,18 @@ class CrontabLexer implements FlexLexer {
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\2\0\1\3\22\0\1\4\2\0"+
-    "\1\5\6\0\1\6\1\0\1\7\2\0\1\10\12\11"+
-    "\u0226\0\12\12\206\0\12\12\306\0\12\12\234\0\12\12"+
-    "\166\0\12\12\140\0\12\12\166\0\12\12\106\0\12\12"+
-    "\u0116\0\12\12\106\0\12\12\u0146\0\12\12\46\0\12\12"+
-    "\u012c\0\12\12\200\0\12\12\246\0\12\12\6\0\12\12"+
-    "\266\0\12\12\126\0\12\12\206\0\12\12\6\0\12\12"+
-    "\u0176\0\12\12\46\0\12\12\306\0\12\12\26\0\12\12"+
-    "\126\0\12\12\u0196\0\12\12\246\0\12\12\206\0\12\12"+
-    "\u012c\0\12\12\200\0\12\12\74\0\12\12\220\0\12\12"+
-    "\166\0\12\12\146\0\12\12\206\0\12\12\106\0\12\12"+
-    "\266\0\12\12\u0164\0\62\12\100\0\12\12\266\0";
+    "\1\5\6\0\1\6\1\0\1\7\1\10\1\0\1\11"+
+    "\12\12\3\0\1\13\u0222\0\12\14\206\0\12\14\306\0"+
+    "\12\14\234\0\12\14\166\0\12\14\140\0\12\14\166\0"+
+    "\12\14\106\0\12\14\u0116\0\12\14\106\0\12\14\u0146\0"+
+    "\12\14\46\0\12\14\u012c\0\12\14\200\0\12\14\246\0"+
+    "\12\14\6\0\12\14\266\0\12\14\126\0\12\14\206\0"+
+    "\12\14\6\0\12\14\u0176\0\12\14\46\0\12\14\306\0"+
+    "\12\14\26\0\12\14\126\0\12\14\u0196\0\12\14\246\0"+
+    "\12\14\206\0\12\14\u012c\0\12\14\200\0\12\14\74\0"+
+    "\12\14\220\0\12\14\166\0\12\14\146\0\12\14\206\0"+
+    "\12\14\106\0\12\14\266\0\12\14\u0164\0\62\14\100\0"+
+    "\12\14\266\0";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[6912];
@@ -110,10 +111,10 @@ class CrontabLexer implements FlexLexer {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\2\0\1\1\1\2\1\3\1\1\1\2\1\4\1\5"+
-    "\1\6\1\7\1\10\1\11\1\3";
+    "\1\6\1\7\1\10\1\11\1\12\1\13\1\3";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[14];
+    int [] result = new int[16];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -138,11 +139,11 @@ class CrontabLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\13\0\26\0\41\0\54\0\67\0\102\0\115"+
-    "\0\54\0\54\0\54\0\130\0\54\0\143";
+    "\0\0\0\15\0\32\0\47\0\64\0\101\0\116\0\133"+
+    "\0\64\0\64\0\64\0\64\0\150\0\32\0\64\0\165";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[14];
+    int [] result = new int[16];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -166,14 +167,14 @@ class CrontabLexer implements FlexLexer {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12"+
-    "\1\13\1\14\2\15\1\7\1\5\1\16\1\7\6\15"+
-    "\2\3\1\0\11\3\1\4\1\0\1\3\1\4\6\3"+
-    "\13\0\2\3\1\5\10\3\1\0\1\7\2\0\1\7"+
-    "\6\0\2\10\1\0\10\10\11\0\1\14\3\0\1\5"+
-    "\10\0";
+    "\1\13\1\14\1\15\1\16\2\17\1\7\1\5\1\20"+
+    "\1\7\10\17\2\3\1\0\13\3\1\4\1\0\1\3"+
+    "\1\4\10\3\15\0\2\3\1\5\12\3\1\0\1\7"+
+    "\2\0\1\7\10\0\2\10\1\0\12\10\12\0\1\15"+
+    "\4\0\1\5\12\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[110];
+    int [] result = new int[130];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -211,10 +212,10 @@ class CrontabLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\1\1\11\3\1\3\11\1\1\1\11\1\1";
+    "\2\0\2\1\1\11\3\1\4\11\2\1\1\11\1\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[14];
+    int [] result = new int[16];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -539,47 +540,57 @@ class CrontabLexer implements FlexLexer {
             { return CrontabTypes.CONTENT;
             }
           // fall through
-          case 10: break;
+          case 12: break;
           case 2:
             { return TokenType.WHITE_SPACE;
             }
           // fall through
-          case 11: break;
+          case 13: break;
           case 3:
             { yybegin(YYINITIAL); return CrontabTypes.NEWLINE;
             }
           // fall through
-          case 12: break;
+          case 14: break;
           case 4:
             { return CrontabTypes.COMMENT;
             }
           // fall through
-          case 13: break;
+          case 15: break;
           case 5:
             { return CrontabTypes.STAR;
             }
           // fall through
-          case 14: break;
+          case 16: break;
           case 6:
             { return CrontabTypes.COMMA;
             }
           // fall through
-          case 15: break;
-          case 7:
-            { return CrontabTypes.SLASH;
-            }
-          // fall through
-          case 16: break;
-          case 8:
-            { return CrontabTypes.NUMBER;
-            }
-          // fall through
           case 17: break;
-          case 9:
-            { throw new Error("Illegal character <"+yytext()+">");
+          case 7:
+            { return CrontabTypes.HYPHEN;
             }
           // fall through
           case 18: break;
+          case 8:
+            { return CrontabTypes.SLASH;
+            }
+          // fall through
+          case 19: break;
+          case 9:
+            { return CrontabTypes.NUMBER;
+            }
+          // fall through
+          case 20: break;
+          case 10:
+            { return CrontabTypes.EQUAL_SIGN;
+            }
+          // fall through
+          case 21: break;
+          case 11:
+            { throw new Error("Illegal character <"+yytext()+">");
+            }
+          // fall through
+          case 22: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

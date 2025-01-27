@@ -5,6 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CrontabStar extends PsiElement {
+public interface CrontabTimeAny extends PsiElement {
 
 }

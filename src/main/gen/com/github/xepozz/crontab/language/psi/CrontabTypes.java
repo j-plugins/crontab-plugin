@@ -12,10 +12,18 @@ public interface CrontabTypes {
   IElementType COMMENT = new CrontabElementType("COMMENT");
   IElementType CRON_EXPRESSION = new CrontabElementType("CRON_EXPRESSION");
   IElementType SCHEDULE = new CrontabElementType("SCHEDULE");
+  IElementType TIME_ANY = new CrontabElementType("TIME_ANY");
+  IElementType TIME_EXACT = new CrontabElementType("TIME_EXACT");
+  IElementType TIME_LIST = new CrontabElementType("TIME_LIST");
+  IElementType TIME_LIST_ITEM = new CrontabElementType("TIME_LIST_ITEM");
+  IElementType TIME_PERIODIC = new CrontabElementType("TIME_PERIODIC");
   IElementType TIME_POINTER = new CrontabElementType("TIME_POINTER");
+  IElementType TIME_RANGE = new CrontabElementType("TIME_RANGE");
+  IElementType TIME_RANGE_STEP = new CrontabElementType("TIME_RANGE_STEP");
 
   IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
+  IElementType HYPHEN = new CrontabTokenType("HYPHEN");
   IElementType NEWLINE = new CrontabTokenType("NEWLINE");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
@@ -37,8 +45,29 @@ public interface CrontabTypes {
       else if (type == SCHEDULE) {
         return new CrontabScheduleImpl(node);
       }
+      else if (type == TIME_ANY) {
+        return new CrontabTimeAnyImpl(node);
+      }
+      else if (type == TIME_EXACT) {
+        return new CrontabTimeExactImpl(node);
+      }
+      else if (type == TIME_LIST) {
+        return new CrontabTimeListImpl(node);
+      }
+      else if (type == TIME_LIST_ITEM) {
+        return new CrontabTimeListItemImpl(node);
+      }
+      else if (type == TIME_PERIODIC) {
+        return new CrontabTimePeriodicImpl(node);
+      }
       else if (type == TIME_POINTER) {
         return new CrontabTimePointerImpl(node);
+      }
+      else if (type == TIME_RANGE) {
+        return new CrontabTimeRangeImpl(node);
+      }
+      else if (type == TIME_RANGE_STEP) {
+        return new CrontabTimeRangeStepImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

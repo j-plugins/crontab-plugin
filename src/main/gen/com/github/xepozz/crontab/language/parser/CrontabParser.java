@@ -60,77 +60,150 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TIME_POINTER+
+  // TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER
   public static boolean SCHEDULE(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "SCHEDULE")) return false;
     if (!nextTokenIs(b, "<schedule>", NUMBER, STAR)) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, SCHEDULE, "<schedule>");
     r = TIME_POINTER(b, l + 1);
-    while (r) {
-      int c = current_position_(b);
-      if (!TIME_POINTER(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "SCHEDULE", c)) break;
-    }
-    exit_section_(b, l, m, r, false, null);
+    p = r; // pin = 1
+    r = r && report_error_(b, TIME_POINTER(b, l + 1));
+    r = p && report_error_(b, TIME_POINTER(b, l + 1)) && r;
+    r = p && report_error_(b, TIME_POINTER(b, l + 1)) && r;
+    r = p && TIME_POINTER(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // STAR
+  public static boolean TIME_ANY(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_ANY")) return false;
+    if (!nextTokenIs(b, STAR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STAR);
+    exit_section_(b, m, TIME_ANY, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (STAR SLASH NUMBER) | STAR | (NUMBER (COMMA NUMBER)*) | NUMBER
+  // NUMBER
+  public static boolean TIME_EXACT(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_EXACT")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    exit_section_(b, m, TIME_EXACT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // NUMBER COMMA TIME_LIST_ITEM (COMMA TIME_LIST_ITEM)*
+  public static boolean TIME_LIST(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_LIST")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TIME_LIST, null);
+    r = consumeTokens(b, 2, NUMBER, COMMA);
+    p = r; // pin = 2
+    r = r && report_error_(b, TIME_LIST_ITEM(b, l + 1));
+    r = p && TIME_LIST_3(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // (COMMA TIME_LIST_ITEM)*
+  private static boolean TIME_LIST_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_LIST_3")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!TIME_LIST_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "TIME_LIST_3", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA TIME_LIST_ITEM
+  private static boolean TIME_LIST_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_LIST_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && TIME_LIST_ITEM(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // TIME_RANGE | NUMBER
+  public static boolean TIME_LIST_ITEM(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_LIST_ITEM")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = TIME_RANGE(b, l + 1);
+    if (!r) r = consumeToken(b, NUMBER);
+    exit_section_(b, m, TIME_LIST_ITEM, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // STAR SLASH NUMBER
+  public static boolean TIME_PERIODIC(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_PERIODIC")) return false;
+    if (!nextTokenIs(b, STAR)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TIME_PERIODIC, null);
+    r = consumeTokens(b, 2, STAR, SLASH, NUMBER);
+    p = r; // pin = 2
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // TIME_PERIODIC | TIME_RANGE | TIME_RANGE_STEP | TIME_LIST | TIME_ANY | TIME_EXACT
   public static boolean TIME_POINTER(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_POINTER")) return false;
     if (!nextTokenIs(b, "<time pointer>", NUMBER, STAR)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TIME_POINTER, "<time pointer>");
-    r = TIME_POINTER_0(b, l + 1);
-    if (!r) r = consumeToken(b, STAR);
-    if (!r) r = TIME_POINTER_2(b, l + 1);
-    if (!r) r = consumeToken(b, NUMBER);
+    r = TIME_PERIODIC(b, l + 1);
+    if (!r) r = TIME_RANGE(b, l + 1);
+    if (!r) r = TIME_RANGE_STEP(b, l + 1);
+    if (!r) r = TIME_LIST(b, l + 1);
+    if (!r) r = TIME_ANY(b, l + 1);
+    if (!r) r = TIME_EXACT(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // STAR SLASH NUMBER
-  private static boolean TIME_POINTER_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_POINTER_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, STAR, SLASH, NUMBER);
-    exit_section_(b, m, null, r);
-    return r;
+  /* ********************************************************** */
+  // NUMBER HYPHEN NUMBER
+  public static boolean TIME_RANGE(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_RANGE")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TIME_RANGE, null);
+    r = consumeTokens(b, 2, NUMBER, HYPHEN, NUMBER);
+    p = r; // pin = 2
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // NUMBER (COMMA NUMBER)*
-  private static boolean TIME_POINTER_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_POINTER_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, NUMBER);
-    r = r && TIME_POINTER_2_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA NUMBER)*
-  private static boolean TIME_POINTER_2_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_POINTER_2_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!TIME_POINTER_2_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "TIME_POINTER_2_1", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA NUMBER
-  private static boolean TIME_POINTER_2_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_POINTER_2_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, COMMA, NUMBER);
-    exit_section_(b, m, null, r);
-    return r;
+  /* ********************************************************** */
+  // NUMBER SLASH NUMBER
+  public static boolean TIME_RANGE_STEP(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_RANGE_STEP")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TIME_RANGE_STEP, null);
+    r = consumeTokens(b, 2, NUMBER, SLASH, NUMBER);
+    p = r; // pin = 2
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

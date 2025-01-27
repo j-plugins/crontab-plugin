@@ -7,4 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface CrontabTimePointer extends PsiElement {
 
+  @Nullable
+  CrontabTimeAny getTimeAny();
+
+  @Nullable
+  CrontabTimeExact getTimeExact();
+
+  @Nullable
+  CrontabTimeList getTimeList();
+
+  @Nullable
+  CrontabTimePeriodic getTimePeriodic();
+
+  @Nullable
+  CrontabTimeRange getTimeRange();
+
+  @Nullable
+  CrontabTimeRangeStep getTimeRangeStep();
+
 }

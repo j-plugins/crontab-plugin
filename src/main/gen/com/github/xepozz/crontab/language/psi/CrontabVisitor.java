@@ -20,7 +20,35 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTimeAny(@NotNull CrontabTimeAny o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeExact(@NotNull CrontabTimeExact o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeList(@NotNull CrontabTimeList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeListItem(@NotNull CrontabTimeListItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimePeriodic(@NotNull CrontabTimePeriodic o) {
+    visitPsiElement(o);
+  }
+
   public void visitTimePointer(@NotNull CrontabTimePointer o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeRange(@NotNull CrontabTimeRange o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeRangeStep(@NotNull CrontabTimeRangeStep o) {
     visitPsiElement(o);
   }
 

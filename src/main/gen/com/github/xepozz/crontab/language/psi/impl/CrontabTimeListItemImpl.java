@@ -11,14 +11,14 @@ import static com.github.xepozz.crontab.language.psi.CrontabTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.xepozz.crontab.language.psi.*;
 
-public class CrontabTimePointerImpl extends ASTWrapperPsiElement implements CrontabTimePointer {
+public class CrontabTimeListItemImpl extends ASTWrapperPsiElement implements CrontabTimeListItem {
 
-  public CrontabTimePointerImpl(@NotNull ASTNode node) {
+  public CrontabTimeListItemImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CrontabVisitor visitor) {
-    visitor.visitTimePointer(this);
+    visitor.visitTimeListItem(this);
   }
 
   @Override
@@ -29,38 +29,8 @@ public class CrontabTimePointerImpl extends ASTWrapperPsiElement implements Cron
 
   @Override
   @Nullable
-  public CrontabTimeAny getTimeAny() {
-    return findChildByClass(CrontabTimeAny.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeExact getTimeExact() {
-    return findChildByClass(CrontabTimeExact.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeList getTimeList() {
-    return findChildByClass(CrontabTimeList.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimePeriodic getTimePeriodic() {
-    return findChildByClass(CrontabTimePeriodic.class);
-  }
-
-  @Override
-  @Nullable
   public CrontabTimeRange getTimeRange() {
     return findChildByClass(CrontabTimeRange.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeRangeStep getTimeRangeStep() {
-    return findChildByClass(CrontabTimeRangeStep.class);
   }
 
 }
