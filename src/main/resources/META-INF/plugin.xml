@@ -36,6 +36,12 @@
         <lang.commenter
                 language="Crontab"
                 implementationClass="com.github.xepozz.crontab.ide.CrontabCommenter"/>
+
+        <intentionAction>
+            <language>Crontab</language>
+            <className>com.github.xepozz.crontab.ide.actions.CrontabGuruIntention</className>
+            <category>Crontab intentions</category>
+        </intentionAction>
     </extensions>
     <actions>
         <action id="Crontab.OpenCrontabGuruAction" popup="false"
@@ -44,6 +50,8 @@
                 description="Opens the schedule in the crontab.guru service"
                 icon="/icons/cron/pluginIcon.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <add-to-group group-id="Floating.CodeToolbar.Extract" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>
