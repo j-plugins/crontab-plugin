@@ -36,6 +36,10 @@
         <lang.commenter
                 language="Crontab"
                 implementationClass="com.github.xepozz.crontab.ide.CrontabCommenter"/>
+        <localInspection
+                language="Crontab" enabledByDefault="true" level="ERROR"
+                groupName="Crontab schedule" displayName="Crontab schedule"
+                implementationClass="com.github.xepozz.crontab.ide.inspections.CrontabScheduleTimeRangeInspection"/>
 
         <intentionAction>
             <language>Crontab</language>

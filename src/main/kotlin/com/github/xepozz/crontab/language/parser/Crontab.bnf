@@ -11,6 +11,8 @@
   elementTypeHolderClass="com.github.xepozz.crontab.language.psi.CrontabTypes"
   elementTypeClass="com.github.xepozz.crontab.language.psi.CrontabElementType"
   tokenTypeClass="com.github.xepozz.crontab.language.psi.CrontabTokenType"
+
+  psiImplUtilClass="com.github.xepozz.crontab.language.psi.impl.CrontabImplUtil"
 }
 
 crontabFile ::= item_*
@@ -35,6 +37,8 @@ TIME_PERIODIC ::= (STAR SLASH NUMBER)
 TIME_RANGE ::= NUMBER HYPHEN NUMBER
 {
     pin=2
+    extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeRangeBaseImpl"
+    methods=[getFirst getSecond getIntRange]
 }
 TIME_RANGE_STEP ::= NUMBER SLASH NUMBER
 {
