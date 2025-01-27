@@ -29,8 +29,12 @@
                 implementationClass="com.github.xepozz.crontab.language.CrontabAnnotator"/>
         <multiHostInjector
                 implementation="com.github.xepozz.crontab.language.CrontabLanguageInjector"/>
+
         <lang.foldingBuilder
                 language="Crontab"
                 implementationClass="com.github.xepozz.crontab.ide.CronScheduleFoldingBuilder"/>
+        <lang.commenter
+                language="Crontab"
+                implementationClass="com.github.xepozz.crontab.ide.CrontabCommenter"/>
     </extensions>
 </idea-plugin>
