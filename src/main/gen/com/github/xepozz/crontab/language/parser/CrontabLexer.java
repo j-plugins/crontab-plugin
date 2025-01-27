@@ -139,7 +139,7 @@ class CrontabLexer implements FlexLexer {
 
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\13\0\26\0\41\0\54\0\67\0\102\0\115"+
-    "\0\54\0\54\0\26\0\130\0\54\0\143";
+    "\0\54\0\54\0\54\0\130\0\54\0\143";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[14];
@@ -211,7 +211,7 @@ class CrontabLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\1\1\11\3\1\2\11\2\1\1\11\1\1";
+    "\2\0\2\1\1\11\3\1\3\11\1\1\1\11\1\1";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[14];
