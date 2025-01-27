@@ -14,7 +14,9 @@
                 implementationClass="com.github.xepozz.crontab.language.CrontabFileType"
                 fieldName="INSTANCE"
                 language="Crontab"
-                extensions="crontab,cron"
+                extensions="crontab;cron"
+                fileNamesCaseInsensitive="crontab;cron"
+                patterns="Crontab.*;Cron.*;crontab.*;cron.*"
         />
         <lang.parserDefinition
                 language="Crontab"

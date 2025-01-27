@@ -8,7 +8,7 @@ class CrontabFileType private constructor() : LanguageFileType(CrontabLanguage.I
 
     override fun getDescription() = "Crontab language file"
 
-    override fun getDefaultExtension() = "crontab"
+    override fun getDefaultExtension() = ""
 
     override fun getIcon() = CrontabIcons.FILE
 
