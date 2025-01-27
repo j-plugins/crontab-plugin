@@ -77,7 +77,7 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (STAR SLASH NUMBER) | STAR | NUMBER
+  // (STAR SLASH NUMBER) | STAR | (NUMBER (COMMA NUMBER)*) | NUMBER
   public static boolean TIME_POINTER(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_POINTER")) return false;
     if (!nextTokenIs(b, "<time pointer>", NUMBER, STAR)) return false;
@@ -85,6 +85,7 @@ public class CrontabParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, TIME_POINTER, "<time pointer>");
     r = TIME_POINTER_0(b, l + 1);
     if (!r) r = consumeToken(b, STAR);
+    if (!r) r = TIME_POINTER_2(b, l + 1);
     if (!r) r = consumeToken(b, NUMBER);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -96,6 +97,38 @@ public class CrontabParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, STAR, SLASH, NUMBER);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // NUMBER (COMMA NUMBER)*
+  private static boolean TIME_POINTER_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_POINTER_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    r = r && TIME_POINTER_2_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA NUMBER)*
+  private static boolean TIME_POINTER_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_POINTER_2_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!TIME_POINTER_2_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "TIME_POINTER_2_1", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA NUMBER
+  private static boolean TIME_POINTER_2_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_POINTER_2_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COMMA, NUMBER);
     exit_section_(b, m, null, r);
     return r;
   }

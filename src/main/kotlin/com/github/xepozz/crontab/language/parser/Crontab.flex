@@ -18,8 +18,9 @@ SINGLE_COMMENT=#[^\n]*
 
 WHITESPACE=[ \t]+
 NEWLINE=\r|\n|\r\n
-TEXT=[^ \*\d\n][^\n]*
+TEXT=[^ \*\,\d\n][^\n]*
 STAR="*"
+COMMA=","
 NUMBER=[0-9]
 SLASH=\/
 
@@ -29,6 +30,7 @@ SLASH=\/
     {SINGLE_COMMENT}       { return CrontabTypes.COMMENT; }
     {STAR}                 { return CrontabTypes.STAR; }
     {SLASH}                { return CrontabTypes.SLASH; }
+    {COMMA}                { return CrontabTypes.COMMA; }
     {NUMBER}+              { return CrontabTypes.NUMBER; }
     {WHITESPACE}+          { return TokenType.WHITE_SPACE; }
     {TEXT}                 { return CrontabTypes.CONTENT; }

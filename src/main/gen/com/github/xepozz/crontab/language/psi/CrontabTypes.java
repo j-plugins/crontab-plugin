@@ -14,6 +14,7 @@ public interface CrontabTypes {
   IElementType SCHEDULE = new CrontabElementType("SCHEDULE");
   IElementType TIME_POINTER = new CrontabElementType("TIME_POINTER");
 
+  IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
   IElementType NEWLINE = new CrontabTokenType("NEWLINE");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
