@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.0.5] - 2025-01-28
+
+- feat: variables syntax support
+
 ## [2025.0.4] - 2025-01-27
 
 - feat: rename plugin
