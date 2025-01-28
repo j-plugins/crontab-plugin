@@ -39,7 +39,7 @@ class CronScheduleFoldingBuilder : CustomFoldingBuilder() {
 
         try {
             return CronScheduleDescriber.asHumanReadable(element.text)
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
         return null
     }
