@@ -17,7 +17,7 @@
 
 crontabFile ::= item_*
 
-private item_ ::= (cronExpression | variableDefinition | COMMENT | NEWLINE)
+private item_ ::= (cronExpression | variableDefinition | COMMENT)
 
 cronExpression ::= (SCHEDULE COMMAND)
 {

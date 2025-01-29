@@ -253,14 +253,13 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // cronExpression | variableDefinition | COMMENT | NEWLINE
+  // cronExpression | variableDefinition | COMMENT
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
     r = cronExpression(b, l + 1);
     if (!r) r = variableDefinition(b, l + 1);
     if (!r) r = COMMENT(b, l + 1);
-    if (!r) r = consumeToken(b, NEWLINE);
     return r;
   }
 

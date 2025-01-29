@@ -118,10 +118,10 @@ class CrontabLexer implements FlexLexer {
   private static final String ZZ_ACTION_PACKED_0 =
     "\4\0\1\1\1\2\2\3\1\4\1\5\1\6\1\7"+
     "\2\10\1\11\1\12\1\13\1\14\1\15\3\16\1\17"+
-    "\1\0\1\16\1\0\2\16\2\0\2\16";
+    "\2\0\1\16\1\0\2\16\2\0\2\16";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[32];
+    int [] result = new int[33];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -149,10 +149,11 @@ class CrontabLexer implements FlexLexer {
     "\0\0\0\23\0\46\0\71\0\114\0\137\0\114\0\162"+
     "\0\205\0\114\0\230\0\253\0\276\0\321\0\114\0\114"+
     "\0\114\0\114\0\344\0\367\0\u010a\0\u011d\0\114\0\u0130"+
-    "\0\u0143\0\u0156\0\u0169\0\114\0\u017c\0\u018f\0\u0130\0\u0156";
+    "\0\u0143\0\u0156\0\u0169\0\u017c\0\114\0\u018f\0\u01a2\0\u0143"+
+    "\0\u0169";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[32];
+    int [] result = new int[33];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -181,22 +182,22 @@ class CrontabLexer implements FlexLexer {
     "\1\16\1\6\3\15\1\17\1\20\1\21\1\22\1\23"+
     "\4\15\1\5\1\24\1\6\1\7\1\5\1\10\1\6"+
     "\1\25\1\24\1\26\5\24\1\27\4\24\24\0\1\6"+
-    "\3\0\1\6\17\0\1\7\20\0\2\11\1\0\20\11"+
+    "\3\0\1\6\17\0\1\7\20\0\2\11\1\30\20\11"+
     "\15\0\1\13\20\0\1\14\1\0\1\14\1\0\1\14"+
     "\1\0\1\14\1\0\2\15\1\0\22\15\1\7\20\15"+
     "\15\0\1\23\5\0\1\24\5\0\10\24\1\0\4\24"+
-    "\1\25\1\30\1\0\3\30\1\24\7\25\1\30\1\25"+
-    "\1\31\2\25\1\26\1\32\1\0\3\32\2\26\1\24"+
-    "\5\26\1\32\1\26\1\33\2\26\2\30\1\0\3\30"+
-    "\1\34\11\30\1\35\2\30\1\25\1\30\1\0\3\30"+
-    "\10\25\1\30\1\25\1\31\2\25\2\32\1\0\5\32"+
-    "\1\34\7\32\1\36\2\32\1\26\1\32\1\0\3\32"+
-    "\10\26\1\32\1\26\1\33\2\26\2\30\1\0\3\30"+
-    "\1\37\11\30\1\35\2\30\2\32\1\0\5\32\1\40"+
-    "\7\32\1\36\2\32";
+    "\1\25\1\31\1\0\3\31\1\24\7\25\1\31\1\25"+
+    "\1\32\2\25\1\26\1\33\1\0\3\33\2\26\1\24"+
+    "\5\26\1\33\1\26\1\34\2\26\7\0\1\11\13\0"+
+    "\2\31\1\0\3\31\1\35\11\31\1\36\2\31\1\25"+
+    "\1\31\1\0\3\31\10\25\1\31\1\25\1\32\2\25"+
+    "\2\33\1\0\5\33\1\35\7\33\1\37\2\33\1\26"+
+    "\1\33\1\0\3\33\10\26\1\33\1\26\1\34\2\26"+
+    "\2\31\1\0\3\31\1\40\11\31\1\36\2\31\2\33"+
+    "\1\0\5\33\1\41\7\33\1\37\2\33";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[418];
+    int [] result = new int[437];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -235,11 +236,11 @@ class CrontabLexer implements FlexLexer {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\4\0\1\11\1\1\1\11\2\1\1\11\4\1\4\11"+
-    "\4\1\1\11\1\0\1\1\1\0\1\1\1\11\2\0"+
+    "\4\1\1\11\2\0\1\1\1\0\1\1\1\11\2\0"+
     "\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[32];
+    int [] result = new int[33];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -571,7 +572,7 @@ class CrontabLexer implements FlexLexer {
           // fall through
           case 17: break;
           case 3:
-            { yybegin(YYINITIAL); return CrontabTypes.NEWLINE;
+            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
             }
           // fall through
           case 18: break;
