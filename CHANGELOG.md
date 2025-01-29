@@ -7,6 +7,7 @@
 ## [2025.0.7] - 2025-01-28
 
 - feat: add structure view
+- feat: add documentation and comments folder
 
 ## [2025.0.6] - 2025-01-28
 
