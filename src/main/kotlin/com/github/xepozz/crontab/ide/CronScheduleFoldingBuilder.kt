@@ -44,5 +44,5 @@ class CronScheduleFoldingBuilder : CustomFoldingBuilder() {
         return null
     }
 
-    override fun isRegionCollapsedByDefault(node: ASTNode): Boolean = true
+    override fun isRegionCollapsedByDefault(node: ASTNode): Boolean = false
 }
