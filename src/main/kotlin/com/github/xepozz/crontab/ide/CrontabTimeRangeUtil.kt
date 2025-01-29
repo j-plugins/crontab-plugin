@@ -54,6 +54,8 @@ object CrontabTimeRangeUtil {
         // Add the last range
         if (rangeStart == rangeEnd) {
             result.add("$rangeStart")
+        } else if (rangeStart + 1 == rangeEnd) {
+            result.add("$rangeStart,$rangeEnd")
         } else {
             result.add("$rangeStart-$rangeEnd")
         }

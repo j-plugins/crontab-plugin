@@ -28,11 +28,10 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
             }
 
             override fun visitTimeList(element: CrontabTimeList) {
+                if (element.timeListItemList.size == 1) return
+
                 val before = element.text
                 val after = CrontabTimeRangeUtil.collapseRanges(element).joinToString(",")
-
-                println("before $before")
-                println("after $after")
 
                 if (before != after) {
                     CrontabInspectionUtil.registerCollapseRangeList(holder, element)

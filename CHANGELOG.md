@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [2025.0.6] - 2025-01-28
+
+- feat: line marker to run the cron command
+- feat: variables passed to the cron command run
+- enh: disable schedule folding by default
+
 ## [2025.0.5] - 2025-01-28
 
 - feat: variables syntax support
