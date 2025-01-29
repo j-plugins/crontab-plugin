@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.0.7] - 2025-01-28
+
+- feat: add structure view
+
 ## [2025.0.6] - 2025-01-28
 
 - feat: line marker to run the cron command
