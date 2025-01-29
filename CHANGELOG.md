@@ -9,6 +9,7 @@
 - feat: line marker to run the cron command
 - feat: variables passed to the cron command run
 - enh: disable schedule folding by default
+- enh: make inspection less noisy
 
 ## [2025.0.5] - 2025-01-28
 
