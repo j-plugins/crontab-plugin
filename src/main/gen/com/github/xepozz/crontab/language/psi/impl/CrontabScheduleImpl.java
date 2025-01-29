@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.xepozz.crontab.language.psi.CrontabTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.xepozz.crontab.language.psi.*;
 
-public class CrontabScheduleImpl extends ASTWrapperPsiElement implements CrontabSchedule {
+public class CrontabScheduleImpl extends CrontabScheduleBaseImpl implements CrontabSchedule {
 
   public CrontabScheduleImpl(@NotNull ASTNode node) {
     super(node);

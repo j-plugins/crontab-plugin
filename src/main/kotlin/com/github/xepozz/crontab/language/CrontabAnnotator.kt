@@ -20,9 +20,6 @@ class CrontabAnnotator : Annotator {
                     .create()
             }
 
-//        CrontabTypes.VARIABLE_NAME -> IDENTIFIER_KEYS
-//        CrontabTypes.VARIABLE_VALUE -> STRING_KEYS
-//        CrontabTypes.EQUAL_SIGN -> OPERATION_KEYS
             is CrontabVariableName -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element.textRange)
@@ -47,7 +44,7 @@ class CrontabAnnotator : Annotator {
     }
 
     companion object {
-        private val SCHEDULE_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
+        val SCHEDULE_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
             "CRONTAB_SCHEDULE",
             DefaultLanguageHighlighterColors.FUNCTION_DECLARATION,
         )

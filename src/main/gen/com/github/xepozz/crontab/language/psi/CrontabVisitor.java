@@ -4,12 +4,14 @@ package com.github.xepozz.crontab.language.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.NavigatablePsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 
 public class CrontabVisitor extends PsiElementVisitor {
 
   public void visitCommand(@NotNull CrontabCommand o) {
-    visitPsiLanguageInjectionHost(o);
+    visitNavigatablePsiElement(o);
+    // visitPsiLanguageInjectionHost(o);
   }
 
   public void visitComment(@NotNull CrontabComment o) {
@@ -17,7 +19,7 @@ public class CrontabVisitor extends PsiElementVisitor {
   }
 
   public void visitSchedule(@NotNull CrontabSchedule o) {
-    visitPsiElement(o);
+    visitNavigatablePsiElement(o);
   }
 
   public void visitTimeAny(@NotNull CrontabTimeAny o) {
@@ -45,7 +47,7 @@ public class CrontabVisitor extends PsiElementVisitor {
   }
 
   public void visitTimeRange(@NotNull CrontabTimeRange o) {
-    visitPsiElement(o);
+    visitNavigatablePsiElement(o);
   }
 
   public void visitTimeRangeStep(@NotNull CrontabTimeRangeStep o) {
@@ -61,14 +63,14 @@ public class CrontabVisitor extends PsiElementVisitor {
   }
 
   public void visitCronExpression(@NotNull CrontabCronExpression o) {
-    visitPsiElement(o);
+    visitNavigatablePsiElement(o);
   }
 
   public void visitVariableDefinition(@NotNull CrontabVariableDefinition o) {
-    visitPsiElement(o);
+    visitNavigatablePsiElement(o);
   }
 
-  public void visitPsiLanguageInjectionHost(@NotNull PsiLanguageInjectionHost o) {
+  public void visitNavigatablePsiElement(@NotNull NavigatablePsiElement o) {
     visitElement(o);
   }
 

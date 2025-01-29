@@ -4,9 +4,10 @@ package com.github.xepozz.crontab.language.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.NavigatablePsiElement;
 import kotlin.ranges.IntRange;
 
-public interface CrontabTimeRange extends PsiElement {
+public interface CrontabTimeRange extends NavigatablePsiElement {
 
   int getFirst();
 

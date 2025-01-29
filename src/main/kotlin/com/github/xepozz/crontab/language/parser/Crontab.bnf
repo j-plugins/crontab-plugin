@@ -22,11 +22,13 @@ private item_ ::= (cronExpression | variableDefinition | COMMENT | NEWLINE)
 cronExpression ::= (SCHEDULE COMMAND)
 {
     pin=1
+    implements=["com.intellij.psi.NavigatablePsiElement"]
 }
 
 variableDefinition ::= (VARIABLE_NAME EQUAL_SIGN VARIABLE_VALUE)
 {
     pin=1
+    implements=["com.intellij.psi.NavigatablePsiElement"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabVariableBaseImpl"
 }
 VARIABLE_NAME ::= IDENTIFIER
@@ -35,6 +37,8 @@ VARIABLE_VALUE ::= CONTENT
 SCHEDULE ::= TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER
 {
     pin=1
+    implements=["com.intellij.psi.NavigatablePsiElement"]
+    extends="com.github.xepozz.crontab.language.psi.impl.CrontabScheduleBaseImpl"
 }
 
 TIME_POINTER ::= TIME_PERIODIC | TIME_RANGE_STEP | TIME_LIST | TIME_ANY
@@ -45,6 +49,7 @@ TIME_PERIODIC ::= (STAR SLASH NUMBER)
 TIME_RANGE ::= NUMBER HYPHEN NUMBER
 {
     pin=2
+    implements=["com.intellij.psi.NavigatablePsiElement"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeRangeBaseImpl"
     methods=[getFirst getSecond getIntRange]
 }
@@ -63,7 +68,7 @@ TIME_EXACT ::= NUMBER
 
 COMMAND ::= CONTENT
 {
-    implements=["com.intellij.psi.PsiLanguageInjectionHost"]
+    implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLanguageInjectionHost"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabCommandBaseImpl"
 }
 

@@ -3,6 +3,8 @@ package com.github.xepozz.crontab.language.psi.impl
 import com.github.xepozz.crontab.language.psi.CrontabCommand
 import com.github.xepozz.crontab.language.psi.CrontabTypes
 import com.intellij.extapi.psi.ASTWrapperPsiElement
+import com.intellij.icons.AllIcons
+import com.intellij.ide.projectView.PresentationData
 import com.intellij.lang.ASTNode
 import com.intellij.psi.LiteralTextEscaper
 import com.intellij.psi.PsiLanguageInjectionHost
@@ -16,6 +18,10 @@ abstract class CrontabCommandBaseImpl : ASTWrapperPsiElement, CrontabCommand, Ps
 
         return keyNode?.text ?: ""
     }
+
+    override fun getPresentation() = PresentationData(text, null, getIcon(0), null)
+
+    override fun getIcon(flags: Int) = AllIcons.Nodes.Console
 
     override fun isValidHost() = true
 
