@@ -7,6 +7,7 @@
 ## [2025.0.8] - 2025-01-30
 
 fix: allow command starting with slash
+fix: disable file masks crontab.*, cron.*
 
 ## [2025.0.7] - 2025-01-29
 
