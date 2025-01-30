@@ -19,7 +19,7 @@ SINGLE_COMMENT=#[^\n]*
 NUMBER=[0-9]+
 WHITESPACE=[ \t]+
 NEWLINE=\r|\n|\r\n
-TEXT=[^ \-\*\,\/\d\n][^\n]*
+TEXT=([^ \-\*\,\/\d\n]|\/[a-zA-Z])[^\n]*
 STAR="*"
 COMMA=","
 
