@@ -46,7 +46,7 @@ class CrontabAnnotator : Annotator {
     companion object {
         val SCHEDULE_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
             "CRONTAB_SCHEDULE",
-            DefaultLanguageHighlighterColors.FUNCTION_DECLARATION,
+            DefaultLanguageHighlighterColors.KEYWORD,
         )
         private val IDENTIFIER_HIGHLIGHT = TextAttributesKey.createTextAttributesKey(
             "CRONTAB_IDENTIFIER",
