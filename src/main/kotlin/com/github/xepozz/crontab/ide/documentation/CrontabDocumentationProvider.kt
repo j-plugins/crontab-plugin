@@ -125,7 +125,7 @@ class CrontabDocumentationProvider : DocumentationProvider {
             try {
                 QuickDocHighlightingHelper.getStyledCodeBlock(project, ShLanguage.INSTANCE, command.text)
                     .apply { append(this) }
-            } catch (_: Exception) {
+            } catch (_: ClassNotFoundException) {
                 append("<pre><code>${command.text}</code></pre>")
             }
         }
