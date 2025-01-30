@@ -17,7 +17,6 @@
                 language="Crontab"
                 extensions="crontab;cron"
                 fileNamesCaseInsensitive="crontab;cron"
-                patterns="Crontab.*;Cron.*;crontab.*;cron.*"
         />
         <lang.parserDefinition
                 language="Crontab"
