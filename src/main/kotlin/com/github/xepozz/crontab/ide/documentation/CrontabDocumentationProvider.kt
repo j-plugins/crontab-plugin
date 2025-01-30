@@ -122,8 +122,12 @@ class CrontabDocumentationProvider : DocumentationProvider {
         append(DocumentationMarkup.SECTIONS_START)
         append(DocumentationMarkup.SECTION_START)
         if (command?.text != null) {
-            QuickDocHighlightingHelper.getStyledCodeBlock(project, ShLanguage.INSTANCE, command.text)
-                .apply { append(this) }
+            try {
+                QuickDocHighlightingHelper.getStyledCodeBlock(project, ShLanguage.INSTANCE, command.text)
+                    .apply { append(this) }
+            } catch (_: Exception) {
+                append("<pre><code>${command.text}</code></pre>")
+            }
         }
         append(DocumentationMarkup.SECTION_END)
         append(DocumentationMarkup.SECTIONS_END)
