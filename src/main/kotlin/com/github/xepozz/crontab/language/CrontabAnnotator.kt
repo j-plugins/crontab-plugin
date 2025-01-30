@@ -1,6 +1,6 @@
 package com.github.xepozz.crontab.language
 
-import com.github.xepozz.crontab.language.psi.CrontabSchedule
+import com.github.xepozz.crontab.language.psi.CrontabTimePointer
 import com.github.xepozz.crontab.language.psi.CrontabVariableName
 import com.github.xepozz.crontab.language.psi.CrontabVariableValue
 import com.intellij.lang.annotation.AnnotationHolder
@@ -13,7 +13,7 @@ import com.intellij.psi.PsiElement
 class CrontabAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         when (element) {
-            is CrontabSchedule -> {
+            is CrontabTimePointer -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element.textRange)
                     .textAttributes(SCHEDULE_HIGHLIGHT)
