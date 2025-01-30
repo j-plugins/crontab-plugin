@@ -4,7 +4,11 @@
 
 ## [Unreleased]
 
-## [2025.0.7] - 2025-01-28
+## [2025.0.8] - 2025-01-30
+
+fix: allow command starting with slash
+
+## [2025.0.7] - 2025-01-29
 
 - feat: add structure view
 - feat: add documentation and comments folder
