@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [2025.0.9] - 2025-02-02
+
+feat: add doc comments support for variables
+fix: allowing time-ranges for step ranges: 1-10/2
+
 ## [2025.0.8] - 2025-01-30
 
 fix: allow command starting with slash
