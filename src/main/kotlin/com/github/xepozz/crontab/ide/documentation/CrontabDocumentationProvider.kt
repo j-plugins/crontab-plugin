@@ -6,6 +6,9 @@ import com.github.xepozz.crontab.language.CrontabFile
 import com.github.xepozz.crontab.language.psi.CrontabCommand
 import com.github.xepozz.crontab.language.psi.CrontabCronExpression
 import com.github.xepozz.crontab.language.psi.CrontabSchedule
+import com.github.xepozz.crontab.language.psi.CrontabVariableDefinition
+import com.github.xepozz.crontab.language.psi.CrontabVariableName
+import com.github.xepozz.crontab.language.psi.CrontabVariableValue
 import com.intellij.extapi.psi.ASTDelegatePsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.lang.documentation.DocumentationMarkup
@@ -38,7 +41,7 @@ class CrontabDocumentationProvider : DocumentationProvider {
     ): PsiElement? {
         if (file !is CrontabFile) return null
 
-        return PsiTreeUtil.findFirstParent(contextElement) { it is CrontabSchedule }
+        return PsiTreeUtil.findFirstParent(contextElement) { it is CrontabSchedule || it is CrontabVariableName }
     }
 
     /**
@@ -51,9 +54,18 @@ class CrontabDocumentationProvider : DocumentationProvider {
                 val file = SymbolPresentationUtil.getFilePathPresentation(element.containingFile)
                 val cronExpression = element.parent as? CrontabCronExpression
                 val command = cronExpression?.children[1] as? CrontabCommand
-                val docComment = CrontabDocumentationUtils.findCronExpressionDocumentation(cronExpression)
+                val docComment = CrontabDocumentationUtils.findCrontabElementDocumentation(cronExpression)
 
                 renderFullDoc(element, command, file, docComment, element.project)
+            }
+
+            is CrontabVariableName -> {
+                val file = SymbolPresentationUtil.getFilePathPresentation(element.containingFile)
+                val variableDefinition = element.parent as? CrontabVariableDefinition
+                val value = variableDefinition?.children[1] as? CrontabVariableValue
+                val docComment = CrontabDocumentationUtils.findCrontabElementDocumentation(variableDefinition)
+
+                renderFullDoc(element, value, file, docComment, element.project)
             }
 
             else -> null
@@ -63,6 +75,11 @@ class CrontabDocumentationProvider : DocumentationProvider {
     override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String? {
         return when (element) {
             is CrontabSchedule -> CronScheduleDescriber.asHumanReadable(element.text)
+            is CrontabVariableName -> {
+                val parent = element.parent as CrontabVariableDefinition
+
+                "${parent.variableValue}"
+            }
 
             else -> "element.text: ${element?.text}"
         }
@@ -85,14 +102,15 @@ class CrontabDocumentationProvider : DocumentationProvider {
     }
 
     override fun collectDocComments(file: PsiFile, sink: Consumer<in PsiDocCommentBase>) {
-        PsiTreeUtil.findChildrenOfType(file, CrontabCronExpression::class.java)
+        buildList {
+            addAll(PsiTreeUtil.findChildrenOfType(file, CrontabCronExpression::class.java))
+            addAll(PsiTreeUtil.findChildrenOfType(file, CrontabVariableDefinition::class.java))
+        }
             .forEach { expression ->
-                CrontabDocumentationUtils.findCronExpressionDocumentationElements(expression)
-                    .forEach { comment ->
-                        sink.accept(object : PsiCommentDelegate(comment), PsiDocCommentBase {
-                            override fun getOwner() = expression
-                        })
-                    }
+                val comment = CrontabDocumentationUtils.findContextualDocumentationElement(expression) ?: return@forEach
+                sink.accept(object : PsiCommentDelegate(comment), PsiDocCommentBase {
+                    override fun getOwner() = expression
+                })
             }
     }
 
@@ -140,6 +158,32 @@ class CrontabDocumentationProvider : DocumentationProvider {
         append(DocumentationMarkup.SECTIONS_START)
         append(DocumentationMarkup.SECTION_START)
         addKeyValueSection("Schedule:", schedule.text, this)
+        addKeyValueSection("Source:", file, this)
+        append(DocumentationMarkup.SECTION_END)
+        append(DocumentationMarkup.SECTIONS_END)
+    }
+
+    private fun renderFullDoc(
+        name: CrontabVariableName,
+        value: CrontabVariableValue?,
+        file: String?,
+        docComment: String,
+        project: Project,
+    ) = buildString {
+
+        append(DocumentationMarkup.DEFINITION_START)
+        append("${name.text} = ${value?.text}")
+        append(DocumentationMarkup.DEFINITION_END)
+
+        if (docComment.isNotEmpty()) {
+            append(DocumentationMarkup.CONTENT_START)
+            append(markdownToHtml(docComment, project))
+            append(DocumentationMarkup.CONTENT_END)
+        }
+        append(DocumentationMarkup.SECTIONS_START)
+        append(DocumentationMarkup.SECTION_START)
+        addKeyValueSection("Name:", name.text, this)
+        addKeyValueSection("Value:", value?.text, this)
         addKeyValueSection("Source:", file, this)
         append(DocumentationMarkup.SECTION_END)
         append(DocumentationMarkup.SECTIONS_END)
