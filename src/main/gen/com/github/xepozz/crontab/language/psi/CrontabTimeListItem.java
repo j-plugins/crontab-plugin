@@ -8,9 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface CrontabTimeListItem extends PsiElement {
 
   @Nullable
+  CrontabTimeAny getTimeAny();
+
+  @Nullable
   CrontabTimeExact getTimeExact();
 
   @Nullable
   CrontabTimeRange getTimeRange();
+
+  @Nullable
+  CrontabTimeRangeStep getTimeRangeStep();
 
 }

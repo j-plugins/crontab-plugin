@@ -38,10 +38,6 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTimePeriodic(@NotNull CrontabTimePeriodic o) {
-    visitPsiElement(o);
-  }
-
   public void visitTimePointer(@NotNull CrontabTimePointer o) {
     visitPsiElement(o);
   }

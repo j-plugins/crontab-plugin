@@ -28,27 +28,9 @@ public class CrontabTimePointerImpl extends ASTWrapperPsiElement implements Cron
   }
 
   @Override
-  @Nullable
-  public CrontabTimeAny getTimeAny() {
-    return findChildByClass(CrontabTimeAny.class);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public CrontabTimeList getTimeList() {
-    return findChildByClass(CrontabTimeList.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimePeriodic getTimePeriodic() {
-    return findChildByClass(CrontabTimePeriodic.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeRangeStep getTimeRangeStep() {
-    return findChildByClass(CrontabTimeRangeStep.class);
+    return findNotNullChildByClass(CrontabTimeList.class);
   }
 
 }

@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface CrontabTimeRangeStep extends PsiElement {
 
+  @Nullable
+  CrontabTimeAny getTimeAny();
+
+  @Nullable
+  CrontabTimeExact getTimeExact();
+
+  @Nullable
+  CrontabTimeRange getTimeRange();
+
 }

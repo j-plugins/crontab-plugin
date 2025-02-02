@@ -16,7 +16,6 @@ public interface CrontabTypes {
   IElementType TIME_EXACT = new CrontabElementType("TIME_EXACT");
   IElementType TIME_LIST = new CrontabElementType("TIME_LIST");
   IElementType TIME_LIST_ITEM = new CrontabElementType("TIME_LIST_ITEM");
-  IElementType TIME_PERIODIC = new CrontabElementType("TIME_PERIODIC");
   IElementType TIME_POINTER = new CrontabElementType("TIME_POINTER");
   IElementType TIME_RANGE = new CrontabElementType("TIME_RANGE");
   IElementType TIME_RANGE_STEP = new CrontabElementType("TIME_RANGE_STEP");
@@ -60,9 +59,6 @@ public interface CrontabTypes {
       }
       else if (type == TIME_LIST_ITEM) {
         return new CrontabTimeListItemImpl(node);
-      }
-      else if (type == TIME_PERIODIC) {
-        return new CrontabTimePeriodicImpl(node);
       }
       else if (type == TIME_POINTER) {
         return new CrontabTimePointerImpl(node);

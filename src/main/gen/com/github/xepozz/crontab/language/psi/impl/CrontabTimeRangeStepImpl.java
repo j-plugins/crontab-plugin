@@ -27,4 +27,22 @@ public class CrontabTimeRangeStepImpl extends ASTWrapperPsiElement implements Cr
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public CrontabTimeAny getTimeAny() {
+    return findChildByClass(CrontabTimeAny.class);
+  }
+
+  @Override
+  @Nullable
+  public CrontabTimeExact getTimeExact() {
+    return findChildByClass(CrontabTimeExact.class);
+  }
+
+  @Override
+  @Nullable
+  public CrontabTimeRange getTimeRange() {
+    return findChildByClass(CrontabTimeRange.class);
+  }
+
 }
