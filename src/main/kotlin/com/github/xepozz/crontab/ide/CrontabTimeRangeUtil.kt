@@ -8,7 +8,7 @@ object CrontabTimeRangeUtil {
             .map {
                 when {
                     it.timeRange != null -> "${it.timeRange!!.text}"
-                    it.timeExact != null -> "${it.timeExact!!.text}"
+                    it.timeExactNumber != null -> "${it.timeExactNumber!!.text}"
                     else -> "0"
                 }
             }
@@ -20,7 +20,7 @@ object CrontabTimeRangeUtil {
             .map {
                 when {
                     it.timeRange != null -> "${it.timeRange!!.text}"
-                    it.timeExact != null -> "${it.timeExact!!.text}"
+                    it.timeExactNumber != null -> "${it.timeExactNumber!!.text}"
                     else -> "0"
                 }
             }

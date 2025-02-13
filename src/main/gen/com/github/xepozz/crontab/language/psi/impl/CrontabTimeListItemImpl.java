@@ -35,8 +35,20 @@ public class CrontabTimeListItemImpl extends ASTWrapperPsiElement implements Cro
 
   @Override
   @Nullable
-  public CrontabTimeExact getTimeExact() {
-    return findChildByClass(CrontabTimeExact.class);
+  public CrontabTimeExactDay getTimeExactDay() {
+    return findChildByClass(CrontabTimeExactDay.class);
+  }
+
+  @Override
+  @Nullable
+  public CrontabTimeExactMonth getTimeExactMonth() {
+    return findChildByClass(CrontabTimeExactMonth.class);
+  }
+
+  @Override
+  @Nullable
+  public CrontabTimeExactNumber getTimeExactNumber() {
+    return findChildByClass(CrontabTimeExactNumber.class);
   }
 
   @Override

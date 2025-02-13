@@ -11,38 +11,20 @@ import static com.github.xepozz.crontab.language.psi.CrontabTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.xepozz.crontab.language.psi.*;
 
-public class CrontabTimeRangeStepImpl extends ASTWrapperPsiElement implements CrontabTimeRangeStep {
+public class CrontabTimeExactMonthImpl extends ASTWrapperPsiElement implements CrontabTimeExactMonth {
 
-  public CrontabTimeRangeStepImpl(@NotNull ASTNode node) {
+  public CrontabTimeExactMonthImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CrontabVisitor visitor) {
-    visitor.visitTimeRangeStep(this);
+    visitor.visitTimeExactMonth(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CrontabVisitor) accept((CrontabVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeAny getTimeAny() {
-    return findChildByClass(CrontabTimeAny.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeExactNumber getTimeExactNumber() {
-    return findChildByClass(CrontabTimeExactNumber.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeRange getTimeRange() {
-    return findChildByClass(CrontabTimeRange.class);
   }
 
 }

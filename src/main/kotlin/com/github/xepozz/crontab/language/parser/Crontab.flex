@@ -9,6 +9,7 @@ import com.intellij.psi.TokenType;
 %class CrontabLexer
 %implements FlexLexer
 %unicode
+%ignorecase
 %function advance
 %type IElementType
 %eof{  return;
@@ -19,7 +20,6 @@ SINGLE_COMMENT=#[^\n]*
 NUMBER=[0-9]+
 WHITESPACE=[ \t]+
 NEWLINE=\r|\n|\r\n
-TEXT=([^ \-\*\,\/\d\n]|\/[a-zA-Z])[^\n]*
 STAR="*"
 COMMA=","
 
@@ -31,7 +31,10 @@ DOUBLE_QUOTED_TEXT = \" (\\\" | [^\n\"])* \"
 SINGLE_QUOTED_TEXT = "'" (\\"'" | [^\n'])* "'"
 QUOTED_TEXT = {SINGLE_QUOTED_TEXT} | {DOUBLE_QUOTED_TEXT}
 
-%state EXPRESSION, SCHEDULE, VARIABLE
+DAY_PATTERN = (MON|TUE|WED|THU|FRI|SAT|SUN)
+MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
+
+%state COMMAND, SCHEDULE, VARIABLE
 %%
 <YYINITIAL> {
     {SINGLE_COMMENT}({NEWLINE}{SINGLE_COMMENT})* { return CrontabTypes.COMMENT; }
@@ -50,8 +53,15 @@ QUOTED_TEXT = {SINGLE_QUOTED_TEXT} | {DOUBLE_QUOTED_TEXT}
     {SLASH}                                      { return CrontabTypes.SLASH; }
     {COMMA}                                      { return CrontabTypes.COMMA; }
     {HYPHEN}                                     { return CrontabTypes.HYPHEN; }
-    {TEXT}                                       { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }
+    {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
+    {DAY_PATTERN}                                { return CrontabTypes.DAY; }
+    {MONTH_PATTERN}                              { return CrontabTypes.MONTH; }
+    [^]                                          { yypushback(1); yybegin(COMMAND); return CrontabTypes.CONTENT; }
 }
+<COMMAND> {
+    ([^\s][^\n]*)                                { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }
+}
+
 
 {WHITESPACE}                                     { return TokenType.WHITE_SPACE; }
 {NEWLINE}                                        { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }

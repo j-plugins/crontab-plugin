@@ -11,14 +11,14 @@ import static com.github.xepozz.crontab.language.psi.CrontabTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.xepozz.crontab.language.psi.*;
 
-public class CrontabTimeExactImpl extends ASTWrapperPsiElement implements CrontabTimeExact {
+public class CrontabTimeExactDayImpl extends ASTWrapperPsiElement implements CrontabTimeExactDay {
 
-  public CrontabTimeExactImpl(@NotNull ASTNode node) {
+  public CrontabTimeExactDayImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CrontabVisitor visitor) {
-    visitor.visitTimeExact(this);
+    visitor.visitTimeExactDay(this);
   }
 
   @Override

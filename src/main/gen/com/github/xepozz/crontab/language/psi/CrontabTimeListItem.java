@@ -11,7 +11,13 @@ public interface CrontabTimeListItem extends PsiElement {
   CrontabTimeAny getTimeAny();
 
   @Nullable
-  CrontabTimeExact getTimeExact();
+  CrontabTimeExactDay getTimeExactDay();
+
+  @Nullable
+  CrontabTimeExactMonth getTimeExactMonth();
+
+  @Nullable
+  CrontabTimeExactNumber getTimeExactNumber();
 
   @Nullable
   CrontabTimeRange getTimeRange();

@@ -13,7 +13,9 @@ public interface CrontabTypes {
   IElementType CRON_EXPRESSION = new CrontabElementType("CRON_EXPRESSION");
   IElementType SCHEDULE = new CrontabElementType("SCHEDULE");
   IElementType TIME_ANY = new CrontabElementType("TIME_ANY");
-  IElementType TIME_EXACT = new CrontabElementType("TIME_EXACT");
+  IElementType TIME_EXACT_DAY = new CrontabElementType("TIME_EXACT_DAY");
+  IElementType TIME_EXACT_MONTH = new CrontabElementType("TIME_EXACT_MONTH");
+  IElementType TIME_EXACT_NUMBER = new CrontabElementType("TIME_EXACT_NUMBER");
   IElementType TIME_LIST = new CrontabElementType("TIME_LIST");
   IElementType TIME_LIST_ITEM = new CrontabElementType("TIME_LIST_ITEM");
   IElementType TIME_POINTER = new CrontabElementType("TIME_POINTER");
@@ -25,9 +27,11 @@ public interface CrontabTypes {
 
   IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
+  IElementType DAY = new CrontabTokenType("DAY");
   IElementType EQUAL_SIGN = new CrontabTokenType("EQUAL_SIGN");
   IElementType HYPHEN = new CrontabTokenType("HYPHEN");
   IElementType IDENTIFIER = new CrontabTokenType("IDENTIFIER");
+  IElementType MONTH = new CrontabTokenType("MONTH");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
   IElementType SLASH = new CrontabTokenType("SLASH");
@@ -51,8 +55,14 @@ public interface CrontabTypes {
       else if (type == TIME_ANY) {
         return new CrontabTimeAnyImpl(node);
       }
-      else if (type == TIME_EXACT) {
-        return new CrontabTimeExactImpl(node);
+      else if (type == TIME_EXACT_DAY) {
+        return new CrontabTimeExactDayImpl(node);
+      }
+      else if (type == TIME_EXACT_MONTH) {
+        return new CrontabTimeExactMonthImpl(node);
+      }
+      else if (type == TIME_EXACT_NUMBER) {
+        return new CrontabTimeExactNumberImpl(node);
       }
       else if (type == TIME_LIST) {
         return new CrontabTimeListImpl(node);

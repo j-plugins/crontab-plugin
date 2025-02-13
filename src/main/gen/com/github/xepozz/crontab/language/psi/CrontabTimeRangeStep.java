@@ -11,7 +11,7 @@ public interface CrontabTimeRangeStep extends PsiElement {
   CrontabTimeAny getTimeAny();
 
   @Nullable
-  CrontabTimeExact getTimeExact();
+  CrontabTimeExactNumber getTimeExactNumber();
 
   @Nullable
   CrontabTimeRange getTimeRange();

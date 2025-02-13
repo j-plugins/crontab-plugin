@@ -26,7 +26,15 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTimeExact(@NotNull CrontabTimeExact o) {
+  public void visitTimeExactDay(@NotNull CrontabTimeExactDay o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeExactMonth(@NotNull CrontabTimeExactMonth o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeExactNumber(@NotNull CrontabTimeExactNumber o) {
     visitPsiElement(o);
   }
 

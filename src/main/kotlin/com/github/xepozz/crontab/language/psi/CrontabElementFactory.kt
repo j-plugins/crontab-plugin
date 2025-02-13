@@ -17,10 +17,10 @@ object CrontabElementFactory {
 
         return PsiTreeUtil.findChildOfType(file, CrontabTimeRange::class.java) as CrontabTimeRange
     }
-    fun createCrontabTimeExact(project: Project, value: Int): CrontabTimeExact {
+    fun createCrontabTimeExact(project: Project, value: Int): CrontabTimeExactNumber {
         val file = createFile(project, "$value")
 
-        return PsiTreeUtil.findChildOfType(file, CrontabTimeExact::class.java) as CrontabTimeExact
+        return PsiTreeUtil.findChildOfType(file, CrontabTimeExactNumber::class.java) as CrontabTimeExactNumber
     }
 
     fun createFile(project: Project, text: String): CrontabFile {
