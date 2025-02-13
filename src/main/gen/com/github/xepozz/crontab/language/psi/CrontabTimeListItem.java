@@ -23,6 +23,12 @@ public interface CrontabTimeListItem extends PsiElement {
   CrontabTimeRange getTimeRange();
 
   @Nullable
+  CrontabTimeRangeDay getTimeRangeDay();
+
+  @Nullable
+  CrontabTimeRangeMonth getTimeRangeMonth();
+
+  @Nullable
   CrontabTimeRangeStep getTimeRangeStep();
 
 }

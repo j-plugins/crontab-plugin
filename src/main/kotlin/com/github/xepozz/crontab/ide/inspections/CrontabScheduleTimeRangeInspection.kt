@@ -18,6 +18,8 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return object : CrontabVisitor() {
             override fun visitTimeRange(element: CrontabTimeRange) {
+//                println("before: ${element.first}, after: ${element.second}")
+
                 if (element.first > element.second) {
                     CrontabInspectionUtil.registerSwapRange(holder, element)
                 }
@@ -33,6 +35,7 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                 val before = element.text
                 val after = CrontabTimeRangeUtil.collapseRanges(element).joinToString(",")
 
+//                println("before: $before, after: $after")
                 if (before != after) {
                     CrontabInspectionUtil.registerCollapseRangeList(holder, element)
                 }

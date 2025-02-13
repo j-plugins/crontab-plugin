@@ -41,7 +41,6 @@ MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
     {STAR}                                       { yybegin(SCHEDULE); return CrontabTypes.STAR; }
     {NUMBER}                                     { yybegin(SCHEDULE); return CrontabTypes.NUMBER; }
     {IDENTIFIER}                                 { yybegin(VARIABLE); return CrontabTypes.IDENTIFIER; }
-    {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
 }
 <VARIABLE> {
     {EQUAL_SIGN}                                 { return CrontabTypes.EQUAL_SIGN; }
@@ -53,10 +52,10 @@ MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
     {SLASH}                                      { return CrontabTypes.SLASH; }
     {COMMA}                                      { return CrontabTypes.COMMA; }
     {HYPHEN}                                     { return CrontabTypes.HYPHEN; }
-    {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
     {DAY_PATTERN}                                { return CrontabTypes.DAY; }
     {MONTH_PATTERN}                              { return CrontabTypes.MONTH; }
-    [^]                                          { yypushback(1); yybegin(COMMAND); return CrontabTypes.CONTENT; }
+    {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
+    ([^]|\/\D)                                   { yypushback(1); yybegin(COMMAND); }
 }
 <COMMAND> {
     ([^\s][^\n]*)                                { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }

@@ -54,6 +54,14 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitNavigatablePsiElement(o);
   }
 
+  public void visitTimeRangeDay(@NotNull CrontabTimeRangeDay o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTimeRangeMonth(@NotNull CrontabTimeRangeMonth o) {
+    visitPsiElement(o);
+  }
+
   public void visitTimeRangeStep(@NotNull CrontabTimeRangeStep o) {
     visitPsiElement(o);
   }

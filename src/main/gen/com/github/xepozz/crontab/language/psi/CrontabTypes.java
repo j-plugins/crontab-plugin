@@ -20,6 +20,8 @@ public interface CrontabTypes {
   IElementType TIME_LIST_ITEM = new CrontabElementType("TIME_LIST_ITEM");
   IElementType TIME_POINTER = new CrontabElementType("TIME_POINTER");
   IElementType TIME_RANGE = new CrontabElementType("TIME_RANGE");
+  IElementType TIME_RANGE_DAY = new CrontabElementType("TIME_RANGE_DAY");
+  IElementType TIME_RANGE_MONTH = new CrontabElementType("TIME_RANGE_MONTH");
   IElementType TIME_RANGE_STEP = new CrontabElementType("TIME_RANGE_STEP");
   IElementType VARIABLE_DEFINITION = new CrontabElementType("VARIABLE_DEFINITION");
   IElementType VARIABLE_NAME = new CrontabElementType("VARIABLE_NAME");
@@ -75,6 +77,12 @@ public interface CrontabTypes {
       }
       else if (type == TIME_RANGE) {
         return new CrontabTimeRangeImpl(node);
+      }
+      else if (type == TIME_RANGE_DAY) {
+        return new CrontabTimeRangeDayImpl(node);
+      }
+      else if (type == TIME_RANGE_MONTH) {
+        return new CrontabTimeRangeMonthImpl(node);
       }
       else if (type == TIME_RANGE_STEP) {
         return new CrontabTimeRangeStepImpl(node);

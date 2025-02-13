@@ -5,11 +5,11 @@ import com.github.xepozz.crontab.language.psi.CrontabTimeList
 object CrontabTimeRangeUtil {
     fun expandRanges(element: CrontabTimeList): Set<Int> {
         val input = element.timeListItemList
-            .map {
+            .mapNotNull {
                 when {
                     it.timeRange != null -> "${it.timeRange!!.text}"
                     it.timeExactNumber != null -> "${it.timeExactNumber!!.text}"
-                    else -> "0"
+                    else -> null
                 }
             }
         return expandRanges(input)
@@ -17,11 +17,11 @@ object CrontabTimeRangeUtil {
 
     fun collapseRanges(element: CrontabTimeList): List<String> {
         val input = element.timeListItemList
-            .map {
+            .mapNotNull {
                 when {
                     it.timeRange != null -> "${it.timeRange!!.text}"
                     it.timeExactNumber != null -> "${it.timeExactNumber!!.text}"
-                    else -> "0"
+                    else -> null
                 }
             }
         return collapseRanges(input)

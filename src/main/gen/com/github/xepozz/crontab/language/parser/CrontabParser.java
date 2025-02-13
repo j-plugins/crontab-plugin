@@ -158,13 +158,15 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TIME_RANGE_STEP | TIME_RANGE | TIME_EXACT_NUMBER | TIME_EXACT_DAY | TIME_EXACT_MONTH | TIME_ANY
+  // TIME_RANGE_STEP | TIME_RANGE | TIME_RANGE_DAY | TIME_RANGE_MONTH | TIME_EXACT_NUMBER | TIME_EXACT_DAY | TIME_EXACT_MONTH | TIME_ANY
   public static boolean TIME_LIST_ITEM(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_LIST_ITEM")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TIME_LIST_ITEM, "<time list item>");
     r = TIME_RANGE_STEP(b, l + 1);
     if (!r) r = TIME_RANGE(b, l + 1);
+    if (!r) r = TIME_RANGE_DAY(b, l + 1);
+    if (!r) r = TIME_RANGE_MONTH(b, l + 1);
     if (!r) r = TIME_EXACT_NUMBER(b, l + 1);
     if (!r) r = TIME_EXACT_DAY(b, l + 1);
     if (!r) r = TIME_EXACT_MONTH(b, l + 1);
@@ -185,51 +187,39 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TIME_RANGE_NUMBER | TIME_RANGE_DAY | TIME_RANGE_MONTH
+  // NUMBER HYPHEN NUMBER
   public static boolean TIME_RANGE(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_RANGE")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TIME_RANGE, "<time range>");
-    r = TIME_RANGE_NUMBER(b, l + 1);
-    if (!r) r = TIME_RANGE_DAY(b, l + 1);
-    if (!r) r = TIME_RANGE_MONTH(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TIME_RANGE, null);
+    r = consumeTokens(b, 2, NUMBER, HYPHEN, NUMBER);
+    p = r; // pin = 2
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
   // DAY HYPHEN DAY
-  static boolean TIME_RANGE_DAY(PsiBuilder b, int l) {
+  public static boolean TIME_RANGE_DAY(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_RANGE_DAY")) return false;
     if (!nextTokenIs(b, DAY)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, DAY, HYPHEN, DAY);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, TIME_RANGE_DAY, r);
     return r;
   }
 
   /* ********************************************************** */
   // MONTH HYPHEN MONTH
-  static boolean TIME_RANGE_MONTH(PsiBuilder b, int l) {
+  public static boolean TIME_RANGE_MONTH(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_RANGE_MONTH")) return false;
     if (!nextTokenIs(b, MONTH)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, MONTH, HYPHEN, MONTH);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // NUMBER HYPHEN NUMBER
-  static boolean TIME_RANGE_NUMBER(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_RANGE_NUMBER")) return false;
-    if (!nextTokenIs(b, NUMBER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, NUMBER, HYPHEN, NUMBER);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, TIME_RANGE_MONTH, r);
     return r;
   }
 
@@ -237,6 +227,7 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   // (TIME_RANGE | TIME_EXACT_NUMBER | TIME_ANY) SLASH NUMBER
   public static boolean TIME_RANGE_STEP(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_RANGE_STEP")) return false;
+    if (!nextTokenIs(b, "<time range step>", NUMBER, STAR)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, TIME_RANGE_STEP, "<time range step>");
     r = TIME_RANGE_STEP_0(b, l + 1);
