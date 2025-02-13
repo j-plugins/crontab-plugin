@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.0.11] - 2025-02-13
+
+feat: allowed mon/tue/wen/... and jan/feb/mar syntax
+
 ## [2025.0.9] - 2025-02-02
 
 feat: add doc comments support for variables
