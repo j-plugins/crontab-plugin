@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.0.12] - 2025-02-17
+
+feat: allowed mon/tue/wen/... and jan/feb/mar syntax
+
 ## [2025.0.11] - 2025-02-13
 
 feat: allowed mon/tue/wen/... and jan/feb/mar syntax
