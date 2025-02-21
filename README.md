@@ -8,6 +8,8 @@
 
 <!-- Plugin description -->
 
+[Github](https://github.com/xepozz/crontab-intellij-plugin) | [Telegram](https://t.me/jb_plugins/2) | [Donation](https://github.com/xepozz/xepozz?tab=readme-ov-file#become-a-sponsor)
+
 ## Cron &amp; Crontab Support
 
 Crontab syntax support:

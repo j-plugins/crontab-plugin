@@ -4,23 +4,28 @@
 
 ## [Unreleased]
 
+## [2025.0.13] - 2025-02-21
+
+- feat: clean code
+- enh: readme
+
 ## [2025.0.12] - 2025-02-17
 
-feat: allowed mon/tue/wen/... and jan/feb/mar syntax
+- feat: allowed mon/tue/wen/... and jan/feb/mar syntax
 
 ## [2025.0.11] - 2025-02-13
 
-feat: allowed mon/tue/wen/... and jan/feb/mar syntax
+- feat: allowed mon/tue/wen/... and jan/feb/mar syntax
 
 ## [2025.0.9] - 2025-02-02
 
-feat: add doc comments support for variables
-fix: allowing time-ranges for step ranges: 1-10/2
+- feat: add doc comments support for variables
+- fix: allowing time-ranges for step ranges: 1-10/2
 
 ## [2025.0.8] - 2025-01-30
 
-fix: allow command starting with slash
-fix: disable file masks crontab.*, cron.*
+- fix: allow command starting with slash
+- fix: disable file masks crontab.*, cron.*
 
 ## [2025.0.7] - 2025-01-29
 
