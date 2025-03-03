@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [2025.0.14] - 2025-03-03
+
+- feat: clean code
+- enh: readme
+
 ## [2025.0.13] - 2025-02-21
 
 - feat: clean code
