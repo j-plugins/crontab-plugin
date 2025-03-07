@@ -13,7 +13,6 @@
         <fileType
                 name="Crontab File"
                 implementationClass="com.github.xepozz.crontab.language.CrontabFileType"
-                fieldName="INSTANCE"
                 language="Crontab"
                 extensions="crontab;cron"
                 fileNamesCaseInsensitive="crontab;cron"

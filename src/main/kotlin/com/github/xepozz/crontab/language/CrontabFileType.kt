@@ -13,6 +13,7 @@ class CrontabFileType private constructor() : LanguageFileType(CrontabLanguage.I
     override fun getIcon() = CrontabIcons.FILE
 
     companion object {
+        @JvmStatic
         val INSTANCE = CrontabFileType()
     }
 }
