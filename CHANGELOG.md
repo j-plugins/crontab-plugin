@@ -4,7 +4,7 @@
 
 ## [Unreleased]
 
-## [2025.0.14] - 2025-03-03
+## [2025.0.15] - 2025-03-07
 
 - feat: clean code
 - enh: readme
