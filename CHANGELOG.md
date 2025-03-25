@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.0.18] - 2025-03-25
+
+- feat: add short syntax support @daily, @hourly, etc
+
 ## [2025.0.17] - 2025-03-20
 
 - fix: accessing field by not obfuscated name
