@@ -2,9 +2,19 @@ package com.github.xepozz.crontab.ide
 
 object CronScheduleDescriber {
     fun asHumanReadable(cron: String): String {
+        when (cron) {
+            "@hourly" -> return "Every hour"
+            "@daily" -> return "Every day"
+            "@weekly" -> return "Every week"
+            "@monthly" -> return "Every month"
+            "@yearly" -> return "Every year"
+            "@annually" -> return "Every year"
+            "@reboot" -> return "After machine boot"
+        }
+
         val fields = cron.trim().split("\\s+".toRegex())
         if (fields.size != 5) {
-            throw IllegalArgumentException("Invalid cron expression. Expected 5 fields, got ${fields.size}")
+            throw IllegalArgumentException("Invalid cron expression. Expected 5 fields, got ${fields.size} in: \"$cron\"")
         }
 
         val (minute, hour, dayOfMonth, month, dayOfWeek) = fields

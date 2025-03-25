@@ -23,10 +23,12 @@ public interface CrontabTypes {
   IElementType TIME_RANGE_DAY = new CrontabElementType("TIME_RANGE_DAY");
   IElementType TIME_RANGE_MONTH = new CrontabElementType("TIME_RANGE_MONTH");
   IElementType TIME_RANGE_STEP = new CrontabElementType("TIME_RANGE_STEP");
+  IElementType TIME_SHORTCUT = new CrontabElementType("TIME_SHORTCUT");
   IElementType VARIABLE_DEFINITION = new CrontabElementType("VARIABLE_DEFINITION");
   IElementType VARIABLE_NAME = new CrontabElementType("VARIABLE_NAME");
   IElementType VARIABLE_VALUE = new CrontabElementType("VARIABLE_VALUE");
 
+  IElementType AT = new CrontabTokenType("AT");
   IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
   IElementType DAY = new CrontabTokenType("DAY");
@@ -35,6 +37,7 @@ public interface CrontabTypes {
   IElementType IDENTIFIER = new CrontabTokenType("IDENTIFIER");
   IElementType MONTH = new CrontabTokenType("MONTH");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
+  IElementType SHORT_KEYWORD = new CrontabTokenType("SHORT_KEYWORD");
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
   IElementType SLASH = new CrontabTokenType("SLASH");
   IElementType STAR = new CrontabTokenType("STAR");
@@ -86,6 +89,9 @@ public interface CrontabTypes {
       }
       else if (type == TIME_RANGE_STEP) {
         return new CrontabTimeRangeStepImpl(node);
+      }
+      else if (type == TIME_SHORTCUT) {
+        return new CrontabTimeShortcutImpl(node);
       }
       else if (type == VARIABLE_DEFINITION) {
         return new CrontabVariableDefinitionImpl(node);

@@ -60,19 +60,29 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER
+  // (TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER) | TIME_SHORTCUT
   public static boolean SCHEDULE(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "SCHEDULE")) return false;
-    boolean r, p;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_, SCHEDULE, "<schedule>");
+    r = SCHEDULE_0(b, l + 1);
+    if (!r) r = TIME_SHORTCUT(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER
+  private static boolean SCHEDULE_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "SCHEDULE_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
     r = TIME_POINTER(b, l + 1);
-    p = r; // pin = 1
-    r = r && report_error_(b, TIME_POINTER(b, l + 1));
-    r = p && report_error_(b, TIME_POINTER(b, l + 1)) && r;
-    r = p && report_error_(b, TIME_POINTER(b, l + 1)) && r;
-    r = p && TIME_POINTER(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    r = r && TIME_POINTER(b, l + 1);
+    r = r && TIME_POINTER(b, l + 1);
+    r = r && TIME_POINTER(b, l + 1);
+    r = r && TIME_POINTER(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -245,6 +255,19 @@ public class CrontabParser implements PsiParser, LightPsiParser {
     if (!r) r = TIME_EXACT_NUMBER(b, l + 1);
     if (!r) r = TIME_ANY(b, l + 1);
     return r;
+  }
+
+  /* ********************************************************** */
+  // AT SHORT_KEYWORD
+  public static boolean TIME_SHORTCUT(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "TIME_SHORTCUT")) return false;
+    if (!nextTokenIs(b, AT)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, TIME_SHORTCUT, null);
+    r = consumeTokens(b, 1, AT, SHORT_KEYWORD);
+    p = r; // pin = 1
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

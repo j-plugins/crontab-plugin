@@ -66,6 +66,10 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTimeShortcut(@NotNull CrontabTimeShortcut o) {
+    visitNavigatablePsiElement(o);
+  }
+
   public void visitVariableName(@NotNull CrontabVariableName o) {
     visitPsiElement(o);
   }

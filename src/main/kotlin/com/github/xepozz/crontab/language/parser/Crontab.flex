@@ -22,6 +22,7 @@ WHITESPACE=[ \t]+
 NEWLINE=\r|\n|\r\n
 STAR="*"
 COMMA=","
+AT="@"
 
 SLASH="/"
 HYPHEN=\-
@@ -33,14 +34,22 @@ QUOTED_TEXT = {SINGLE_QUOTED_TEXT} | {DOUBLE_QUOTED_TEXT}
 
 DAY_PATTERN = (MON|TUE|WED|THU|FRI|SAT|SUN)
 MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
+KEYWORD_YEARLY = "yearly"
+KEYWORD_ANNUALLY = "annually"
+KEYWORD_MONTHLY = "monthly"
+KEYWORD_WEEKLY = "weekly"
+KEYWORD_DAILY = "daily"
+KEYWORD_HOURLY = "hourly"
+KEYWORD_REBOOT = "reboot"
 
-%state COMMAND, SCHEDULE, VARIABLE
+%state COMMAND, SCHEDULE, VARIABLE, SIMPLE_SYNTAX
 %%
 <YYINITIAL> {
     {SINGLE_COMMENT}({NEWLINE}{SINGLE_COMMENT})* { return CrontabTypes.COMMENT; }
     {STAR}                                       { yybegin(SCHEDULE); return CrontabTypes.STAR; }
     {NUMBER}                                     { yybegin(SCHEDULE); return CrontabTypes.NUMBER; }
     {IDENTIFIER}                                 { yybegin(VARIABLE); return CrontabTypes.IDENTIFIER; }
+    {AT}                                         { yybegin(SIMPLE_SYNTAX); return CrontabTypes.AT; }
 }
 <VARIABLE> {
     {EQUAL_SIGN}                                 { return CrontabTypes.EQUAL_SIGN; }
@@ -59,6 +68,17 @@ MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
 }
 <COMMAND> {
     ([^\s][^\n]*)                                { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }
+}
+<SIMPLE_SYNTAX> {
+    {KEYWORD_YEARLY}                             { return CrontabTypes.SHORT_KEYWORD; }
+    {KEYWORD_ANNUALLY}                           { return CrontabTypes.SHORT_KEYWORD; }
+    {KEYWORD_MONTHLY}                            { return CrontabTypes.SHORT_KEYWORD; }
+    {KEYWORD_WEEKLY}                             { return CrontabTypes.SHORT_KEYWORD; }
+    {KEYWORD_DAILY}                              { return CrontabTypes.SHORT_KEYWORD; }
+    {KEYWORD_HOURLY}                             { return CrontabTypes.SHORT_KEYWORD; }
+    {KEYWORD_REBOOT}                             { return CrontabTypes.SHORT_KEYWORD; }
+    {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
+    ([^]|\/\D)                                   { yypushback(1); yybegin(COMMAND); }
 }
 
 

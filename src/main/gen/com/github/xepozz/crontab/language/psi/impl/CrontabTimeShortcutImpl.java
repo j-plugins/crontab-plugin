@@ -8,34 +8,23 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.xepozz.crontab.language.psi.CrontabTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.xepozz.crontab.language.psi.*;
 
-public class CrontabScheduleImpl extends CrontabScheduleBaseImpl implements CrontabSchedule {
+public class CrontabTimeShortcutImpl extends ASTWrapperPsiElement implements CrontabTimeShortcut {
 
-  public CrontabScheduleImpl(@NotNull ASTNode node) {
+  public CrontabTimeShortcutImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CrontabVisitor visitor) {
-    visitor.visitSchedule(this);
+    visitor.visitTimeShortcut(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CrontabVisitor) accept((CrontabVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<CrontabTimePointer> getTimePointerList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrontabTimePointer.class);
-  }
-
-  @Override
-  @Nullable
-  public CrontabTimeShortcut getTimeShortcut() {
-    return findChildByClass(CrontabTimeShortcut.class);
   }
 
 }
