@@ -7,6 +7,7 @@
 ## [2025.0.18] - 2025-03-25
 
 - feat: add short syntax support @daily, @hourly, etc
+- feat: add short syntax completion
 
 ## [2025.0.17] - 2025-03-20
 
