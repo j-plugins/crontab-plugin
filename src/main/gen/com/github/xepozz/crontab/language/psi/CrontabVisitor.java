@@ -5,6 +5,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.NavigatablePsiElement;
+import com.intellij.psi.PsiLiteralValue;
 import com.intellij.psi.PsiLanguageInjectionHost;
 
 public class CrontabVisitor extends PsiElementVisitor {
@@ -68,6 +69,7 @@ public class CrontabVisitor extends PsiElementVisitor {
 
   public void visitTimeShortcut(@NotNull CrontabTimeShortcut o) {
     visitNavigatablePsiElement(o);
+    // visitPsiLiteralValue(o);
   }
 
   public void visitVariableName(@NotNull CrontabVariableName o) {

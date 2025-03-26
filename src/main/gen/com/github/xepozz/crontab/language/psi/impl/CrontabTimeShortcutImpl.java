@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.xepozz.crontab.language.psi.CrontabTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.xepozz.crontab.language.psi.*;
 
-public class CrontabTimeShortcutImpl extends ASTWrapperPsiElement implements CrontabTimeShortcut {
+public class CrontabTimeShortcutImpl extends CrontabTimeShortcutBaseImpl implements CrontabTimeShortcut {
 
   public CrontabTimeShortcutImpl(@NotNull ASTNode node) {
     super(node);

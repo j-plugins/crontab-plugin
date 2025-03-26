@@ -258,16 +258,15 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AT SHORT_KEYWORD
+  // AT CONTENT
   public static boolean TIME_SHORTCUT(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "TIME_SHORTCUT")) return false;
     if (!nextTokenIs(b, AT)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, TIME_SHORTCUT, null);
-    r = consumeTokens(b, 1, AT, SHORT_KEYWORD);
-    p = r; // pin = 1
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, AT, CONTENT);
+    exit_section_(b, m, TIME_SHORTCUT, r);
+    return r;
   }
 
   /* ********************************************************** */

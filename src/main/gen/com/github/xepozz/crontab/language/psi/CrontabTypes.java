@@ -37,7 +37,6 @@ public interface CrontabTypes {
   IElementType IDENTIFIER = new CrontabTokenType("IDENTIFIER");
   IElementType MONTH = new CrontabTokenType("MONTH");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
-  IElementType SHORT_KEYWORD = new CrontabTokenType("SHORT_KEYWORD");
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
   IElementType SLASH = new CrontabTokenType("SLASH");
   IElementType STAR = new CrontabTokenType("STAR");

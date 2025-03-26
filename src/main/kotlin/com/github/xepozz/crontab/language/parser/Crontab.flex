@@ -70,15 +70,9 @@ KEYWORD_REBOOT = "reboot"
     ([^\s][^\n]*)                                { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }
 }
 <SIMPLE_SYNTAX> {
-    {KEYWORD_YEARLY}                             { return CrontabTypes.SHORT_KEYWORD; }
-    {KEYWORD_ANNUALLY}                           { return CrontabTypes.SHORT_KEYWORD; }
-    {KEYWORD_MONTHLY}                            { return CrontabTypes.SHORT_KEYWORD; }
-    {KEYWORD_WEEKLY}                             { return CrontabTypes.SHORT_KEYWORD; }
-    {KEYWORD_DAILY}                              { return CrontabTypes.SHORT_KEYWORD; }
-    {KEYWORD_HOURLY}                             { return CrontabTypes.SHORT_KEYWORD; }
-    {KEYWORD_REBOOT}                             { return CrontabTypes.SHORT_KEYWORD; }
+    [^\s]+                                       { return CrontabTypes.CONTENT; }
     {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
-    ([^]|\/\D)                                   { yypushback(1); yybegin(COMMAND); }
+    ([\s][^])                                    { yypushback(yylength()); yybegin(COMMAND); }
 }
 
 

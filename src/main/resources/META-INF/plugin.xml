@@ -29,6 +29,9 @@
         <multiHostInjector
                 implementation="com.github.xepozz.crontab.language.CrontabLanguageInjector"/>
 
+        <completion.contributor
+                language="Crontab"
+                implementationClass="com.github.xepozz.crontab.ide.completion.CrontabShortcutCompletionContributor"/>
         <lang.psiStructureViewFactory
                 language="Crontab"
                 implementationClass="com.github.xepozz.crontab.ide.structureView.CrontabStructureViewFactory"/>

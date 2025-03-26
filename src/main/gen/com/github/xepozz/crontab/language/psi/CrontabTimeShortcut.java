@@ -5,7 +5,8 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.NavigatablePsiElement;
+import com.intellij.psi.PsiLiteralValue;
 
-public interface CrontabTimeShortcut extends NavigatablePsiElement {
+public interface CrontabTimeShortcut extends NavigatablePsiElement, PsiLiteralValue {
 
 }
