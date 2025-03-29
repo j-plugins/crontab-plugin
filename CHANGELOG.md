@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.0.19] - 2025-03-29
+
+- feat: update dependencies
+
 ## [2025.0.18] - 2025-03-25
 
 - feat: add short syntax support @daily, @hourly, etc
