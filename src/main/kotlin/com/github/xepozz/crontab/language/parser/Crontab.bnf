@@ -42,7 +42,7 @@ TIME_SHORTCUT ::= AT CONTENT
 
 SCHEDULE ::= (TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER) | TIME_SHORTCUT
 {
-    implements=["com.intellij.psi.NavigatablePsiElement"]
+    implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLiteralValue"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabScheduleBaseImpl"
 }
 
@@ -71,7 +71,7 @@ TIME_EXACT_NUMBER ::= NUMBER
 TIME_EXACT_DAY ::= DAY
 TIME_EXACT_MONTH ::= MONTH
 
-COMMAND ::= CONTENT
+COMMAND ::= CONTENT | NEWLINE
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLanguageInjectionHost"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabCommandBaseImpl"

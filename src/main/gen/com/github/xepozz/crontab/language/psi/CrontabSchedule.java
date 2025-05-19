@@ -5,8 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.NavigatablePsiElement;
+import com.intellij.psi.PsiLiteralValue;
 
-public interface CrontabSchedule extends NavigatablePsiElement {
+public interface CrontabSchedule extends NavigatablePsiElement, PsiLiteralValue {
 
   @NotNull
   List<CrontabTimePointer> getTimePointerList();

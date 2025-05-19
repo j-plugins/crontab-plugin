@@ -36,14 +36,15 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONTENT
+  // CONTENT | NEWLINE
   public static boolean COMMAND(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "COMMAND")) return false;
-    if (!nextTokenIs(b, CONTENT)) return false;
+    if (!nextTokenIs(b, "<command>", CONTENT, NEWLINE)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, COMMAND, "<command>");
     r = consumeToken(b, CONTENT);
-    exit_section_(b, m, COMMAND, r);
+    if (!r) r = consumeToken(b, NEWLINE);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

@@ -12,6 +12,8 @@ abstract class CrontabScheduleBaseImpl : ASTWrapperPsiElement, CrontabSchedule {
 
     override fun getText() = this.node.text
 
+    override fun getValue() = this.text
+
     override fun getPresentation() = PresentationData(text, null, getIcon(0), CrontabAnnotator.SCHEDULE_HIGHLIGHT)
 
     override fun getIcon(flags: Int) = AllIcons.Nodes.DataTables

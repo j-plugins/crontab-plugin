@@ -21,6 +21,7 @@ public class CrontabVisitor extends PsiElementVisitor {
 
   public void visitSchedule(@NotNull CrontabSchedule o) {
     visitNavigatablePsiElement(o);
+    // visitPsiLiteralValue(o);
   }
 
   public void visitTimeAny(@NotNull CrontabTimeAny o) {
