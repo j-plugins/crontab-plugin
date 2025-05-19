@@ -10,22 +10,34 @@ import com.intellij.codeInsight.hints.declarative.InlayTreeSink
 import com.intellij.codeInsight.hints.declarative.InlineInlayPosition
 import com.intellij.codeInsight.hints.declarative.SharedBypassCollector
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiLanguageInjectionHost
+import com.intellij.psi.PsiLiteralValue
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.endOffset
 
 class CrontabInlayHintsProvider : InlayHintsProvider {
+    companion object {
+        val QUOTES = arrayOf<Char>('"', '\'', '`')
+    }
+
     override fun createCollector(
         file: PsiFile,
         editor: Editor
     ): InlayHintsCollector {
         return object : SharedBypassCollector {
             override fun collectFromElement(element: PsiElement, sink: InlayTreeSink) {
-                val crontabFile = CrontabElementFactory.createFile(element.project, element.text)
+                if (element !is PsiLiteralValue && element !is PsiLanguageInjectionHost) return
+
+                val text = QUOTES.fold(element.text) { acc, string -> StringUtil.unquoteString(acc, string) }
+
+                val crontabFile = CrontabElementFactory.createFile(element.project, text)
                 val expression = crontabFile.children.getOrNull(0) as? CrontabCronExpression ?: return
-                if (expression.schedule.text != element.text) {
-                    return
+                when {
+                    expression.schedule.text != text -> return
+                    text.startsWith("@") -> return
                 }
 
                 val schedules = PsiTreeUtil.findChildrenOfType(crontabFile, CrontabSchedule::class.java)
@@ -34,17 +46,18 @@ class CrontabInlayHintsProvider : InlayHintsProvider {
                 if (schedules.isNotEmpty()) {
 
                     val offset = when {
-                        element.nextSibling.text in arrayOf("\"", "'", "`") -> element.nextSibling.endOffset
+                        (element.nextSibling?.text?.getOrNull(0)) in QUOTES -> element.nextSibling.endOffset
                         else -> element.endOffset
                     }
                     sink.addPresentation(
                         position = InlineInlayPosition(offset, false, 100),
                         hintFormat = HintFormat.default,
                     ) {
-                        text(CronScheduleDescriber.asHumanReadable(element.text))
+                        text(CronScheduleDescriber.asHumanReadable(text))
                     }
                 }
             }
         }
     }
+
 }
