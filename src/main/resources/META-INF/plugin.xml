@@ -10,6 +10,8 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.declarativeInlayProviderFactory
+                implementation="com.github.xepozz.crontab.ide.CrontabInlayHintsProviderFactory"/>
         <fileType
                 name="Crontab File"
                 implementationClass="com.github.xepozz.crontab.language.CrontabFileType"
