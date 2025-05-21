@@ -18,7 +18,7 @@ import com.intellij.psi.TokenType;
 SINGLE_COMMENT=#[^\n]*
 
 NUMBER=[0-9]+
-WHITESPACE=[ \t]+
+WHITESPACE=[ \h\f\t]+
 NEWLINE=\r|\n|\r\n
 STAR="*"
 COMMA=","
@@ -77,7 +77,7 @@ KEYWORD_REBOOT = "reboot"
 
 
 {WHITESPACE}                                     { return TokenType.WHITE_SPACE; }
-{NEWLINE}                                        { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+{NEWLINE}                                        { yybegin(YYINITIAL); return CrontabTypes.NEWLINE; }
 
 [^]                                              { return TokenType.BAD_CHARACTER; }
 //[^]                                              { throw new Error("Illegal character <"+yytext()+">"); }

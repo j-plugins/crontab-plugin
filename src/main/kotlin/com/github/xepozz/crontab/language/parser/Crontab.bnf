@@ -17,9 +17,9 @@
 
 crontabFile ::= item_*
 
-private item_ ::= (cronExpression | variableDefinition | COMMENT)
+private item_ ::= cronExpression | variableDefinition | COMMENT | NEWLINE
 
-cronExpression ::= (SCHEDULE COMMAND)
+cronExpression ::= SCHEDULE COMMAND
 {
     pin=1
     implements=["com.intellij.psi.NavigatablePsiElement"]
