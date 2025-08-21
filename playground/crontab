@@ -1,0 +1,14 @@
+# Comments are alright
+
+## Variables are also ok
+PWD = '/my/dir'
+
+*/4 * * * * mkdir "dirname" -la # this is a comment for the shell command
+
+1,2,3,4,5 * * * * yii scheduler/trigger --verbose >/dev/null 2>&1
+
+# Collapsed string
+1,2,3,4,5 * * * * yii scheduler/trigger --verbose >/dev/null 2>&1
+
+
+*/4 * * * *     /usr/local/bin/php

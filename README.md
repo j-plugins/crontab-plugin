@@ -40,6 +40,20 @@ Chose the best option for you to say thank you:
 
 <!-- Plugin description end -->
 
+## Screenshots
+
+#### Basic usage
+
+![basic.png](docs/screenshots/basic.png)
+
+#### Intentions
+
+![intention_collapse-list.png](docs/screenshots/intention_collapse-list.png)
+
+#### Integrations
+
+![integration_crontab-guru.png](docs/screenshots/integration_crontab-guru.png)
+
 ## Installation
 
 - Using the IDE built-in plugin system:
