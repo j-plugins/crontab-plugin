@@ -1,6 +1,6 @@
 # Crontab
 
-![Build](https://github.com/xepozz/crontab-plugin/workflows/Build/badge.svg)
+![Build](https://github.com/j-plugins/crontab-plugin/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 
@@ -8,7 +8,7 @@
 
 <!-- Plugin description -->
 
-[Github](https://github.com/xepozz/crontab-intellij-plugin) | [Telegram](https://t.me/jb_plugins/2) | [Donation](https://github.com/xepozz/xepozz?tab=readme-ov-file#become-a-sponsor)
+[Github](https://github.com/j-plugins/crontab-plugin) | [Telegram](https://t.me/jb_plugins/2) | [Donation](https://github.com/xepozz/xepozz?tab=readme-ov-file#become-a-sponsor)
 
 ## Cron &amp; Crontab Support
 
@@ -70,7 +70,8 @@ Chose the best option for you to say thank you:
 
 - Manually:
 
-  Download the [latest release](https://github.com/xepozz/crontab-plugin/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/j-plugins/crontab-plugin/releases/latest) and install it manually
+  using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 
