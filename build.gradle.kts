@@ -1,6 +1,5 @@
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import java.nio.charset.Charset
 import java.util.*
 
 plugins {
@@ -11,8 +10,12 @@ plugins {
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
 }
-val envProperties = Properties()
-envProperties.load(file(".env").reader(Charset.forName("UTF-8")))
+
+val envProperties by lazy {
+    Properties().apply {
+        load(file(".env").inputStream())
+    }
+}
 
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
