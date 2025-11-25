@@ -2,6 +2,7 @@ package com.github.xepozz.crontab.ide.actions
 
 import com.github.xepozz.crontab.CrontabIcons
 import com.github.xepozz.crontab.ide.CrontabGuruUtils
+import com.github.xepozz.crontab.language.CrontabFile
 import com.github.xepozz.crontab.language.psi.CrontabPsiTreeUtils
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction
 import com.intellij.codeInsight.intention.preview.IntentionPreviewInfo
@@ -25,7 +26,9 @@ class CrontabGuruIntention : PsiElementBaseIntentionAction(), Iconable, DumbAwar
         }
     }
 
-    override fun isAvailable(project: Project, editor: Editor?, element: PsiElement) = true
+    override fun isAvailable(project: Project, editor: Editor?, element: PsiElement): Boolean {
+        return element.containingFile is CrontabFile
+    }
 
     override fun generatePreview(project: Project, editor: Editor, file: PsiFile) = IntentionPreviewInfo.EMPTY
 
