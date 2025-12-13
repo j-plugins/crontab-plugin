@@ -1,5 +1,6 @@
 package com.github.xepozz.crontab.ide
 
+import com.github.xepozz.crontab.ide.describe.CronScheduleDescriber
 import com.github.xepozz.crontab.language.psi.CrontabCronExpression
 import com.github.xepozz.crontab.language.psi.CrontabElementFactory
 import com.github.xepozz.crontab.language.psi.CrontabSchedule
@@ -44,17 +45,16 @@ class CrontabInlayHintsProvider : InlayHintsProvider {
 //                println("schedules: ${schedules}")
 
                 if (schedules.isNotEmpty()) {
+                    val text = CronScheduleDescriber.asHumanReadable(text).ifEmpty { return }
 
                     val offset = when {
                         (element.nextSibling?.text?.getOrNull(0)) in QUOTES -> element.nextSibling.endOffset
                         else -> element.endOffset
                     }
                     sink.addPresentation(
-                        position = InlineInlayPosition(offset, false, 100),
+                        position = InlineInlayPosition(offset, true, 100),
                         hintFormat = HintFormat.default,
-                    ) {
-                        text(CronScheduleDescriber.asHumanReadable(text))
-                    }
+                    ) { text(text) }
                 }
             }
         }

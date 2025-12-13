@@ -4,9 +4,7 @@ import com.github.xepozz.crontab.language.psi.CrontabCommand
 import com.intellij.lang.Language
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
-import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiLanguageInjectionHost
 
 class CrontabLanguageInjector : MultiHostInjector {
     val shellLanguage = Language.findLanguageByID("Shell Script")
@@ -15,16 +13,16 @@ class CrontabLanguageInjector : MultiHostInjector {
 
         when (element) {
             is CrontabCommand -> {
-                if (element.textLength > 0) {
+                val textRange = element.textRange
+                if (!textRange.isEmpty && element.text.isNotEmpty()) {
+                    val range = textRange.shiftLeft(element.textOffset)
                     registrar.startInjecting(shellLanguage)
-                        .addPlace(null, null, element, TextRange(0, element.textLength))
+                        .addPlace(null, null, element, range)
                         .doneInjecting()
                 }
             }
         }
     }
 
-    override fun elementsToInjectIn(): List<Class<out PsiElement>> {
-        return listOf(PsiLanguageInjectionHost::class.java)
-    }
+    override fun elementsToInjectIn() = listOf(CrontabCommand::class.java)
 }
