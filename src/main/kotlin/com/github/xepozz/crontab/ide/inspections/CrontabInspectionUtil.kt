@@ -7,6 +7,7 @@ import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiElement
 
 object CrontabInspectionUtil {
     fun registerSwapRange(holder: ProblemsHolder, element: CrontabTimeRange) {
@@ -78,6 +79,62 @@ object CrontabInspectionUtil {
                     }
                 }
             }
+        )
+    }
+
+    fun registerMinuteOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Minute pattern should be in range 0-59.",
+            ProblemHighlightType.ERROR,
+        )
+    }
+
+    fun registerHourOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Hour pattern should be in range 0-23.",
+            ProblemHighlightType.ERROR,
+        )
+    }
+
+    fun registerDayOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Day pattern should be in range 1-31.",
+            ProblemHighlightType.ERROR,
+        )
+    }
+
+    fun registerMonthNumberOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Month pattern should be in range 1-12.",
+            ProblemHighlightType.ERROR,
+        )
+    }
+
+    fun registerMonthTextOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Month pattern should be one of values: ${CronPatterns.MONTHS.joinToString { ", " }}.",
+            ProblemHighlightType.ERROR,
+        )
+    }
+
+    fun registerWeekdayNumberOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Weekday pattern should be in range 0-6.",
+            ProblemHighlightType.ERROR,
+        )
+    }
+
+    fun registerWeekdayTextOverlaps(holder: ProblemsHolder, element: PsiElement) {
+        holder.registerProblem(
+            element,
+            "Weekday pattern should be one of values: ${CronPatterns.DAYS.joinToString { ", " }}.",
+            ProblemHighlightType.ERROR,
         )
     }
 }
