@@ -35,7 +35,6 @@ public interface CrontabTypes {
   IElementType AT = new CrontabTokenType("AT");
   IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
-  IElementType DAY = new CrontabTokenType("DAY");
   IElementType EOL = new CrontabTokenType("EOL");
   IElementType EQUAL_SIGN = new CrontabTokenType("EQUAL_SIGN");
   IElementType HYPHEN = new CrontabTokenType("HYPHEN");
@@ -45,6 +44,7 @@ public interface CrontabTypes {
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
   IElementType SLASH = new CrontabTokenType("SLASH");
   IElementType STAR = new CrontabTokenType("STAR");
+  IElementType WEEKDAY = new CrontabTokenType("WEEKDAY");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

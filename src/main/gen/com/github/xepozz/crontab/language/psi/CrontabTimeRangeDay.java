@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface CrontabTimeRangeDay extends PsiElement {
 
+  @NotNull
+  List<CrontabTimeExactDay> getTimeExactDayList();
+
 }

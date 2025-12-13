@@ -186,13 +186,13 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DAY
+  // WEEKDAY
   public static boolean time_exact_day(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "time_exact_day")) return false;
-    if (!nextTokenIs(b, DAY)) return false;
+    if (!nextTokenIs(b, WEEKDAY)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, DAY);
+    r = consumeToken(b, WEEKDAY);
     exit_section_(b, m, TIME_EXACT_DAY, r);
     return r;
   }
@@ -285,52 +285,59 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NUMBER HYPHEN NUMBER
+  // time_exact_number HYPHEN time_exact_number
   public static boolean time_range(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "time_range")) return false;
     if (!nextTokenIs(b, NUMBER)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, TIME_RANGE, null);
-    r = consumeTokens(b, 2, NUMBER, HYPHEN, NUMBER);
+    r = time_exact_number(b, l + 1);
+    r = r && consumeToken(b, HYPHEN);
     p = r; // pin = 2
+    r = r && time_exact_number(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   /* ********************************************************** */
-  // DAY HYPHEN DAY
+  // time_exact_day HYPHEN time_exact_day
   public static boolean time_range_day(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "time_range_day")) return false;
-    if (!nextTokenIs(b, DAY)) return false;
+    if (!nextTokenIs(b, WEEKDAY)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, DAY, HYPHEN, DAY);
+    r = time_exact_day(b, l + 1);
+    r = r && consumeToken(b, HYPHEN);
+    r = r && time_exact_day(b, l + 1);
     exit_section_(b, m, TIME_RANGE_DAY, r);
     return r;
   }
 
   /* ********************************************************** */
-  // MONTH HYPHEN MONTH
+  // time_exact_month HYPHEN time_exact_month
   public static boolean time_range_month(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "time_range_month")) return false;
     if (!nextTokenIs(b, MONTH)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, MONTH, HYPHEN, MONTH);
+    r = time_exact_month(b, l + 1);
+    r = r && consumeToken(b, HYPHEN);
+    r = r && time_exact_month(b, l + 1);
     exit_section_(b, m, TIME_RANGE_MONTH, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (time_range | time_exact_number | time_any) SLASH NUMBER
+  // (time_range | time_exact_number | time_any) SLASH time_exact_number
   public static boolean time_range_step(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "time_range_step")) return false;
     if (!nextTokenIs(b, "<time range step>", NUMBER, STAR)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, TIME_RANGE_STEP, "<time range step>");
     r = time_range_step_0(b, l + 1);
-    r = r && consumeTokens(b, 1, SLASH, NUMBER);
+    r = r && consumeToken(b, SLASH);
     p = r; // pin = 2
+    r = r && time_exact_number(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }

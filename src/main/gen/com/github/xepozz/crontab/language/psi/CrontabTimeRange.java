@@ -9,6 +9,9 @@ import kotlin.ranges.IntRange;
 
 public interface CrontabTimeRange extends NavigatablePsiElement {
 
+  @NotNull
+  List<CrontabTimeExactNumber> getTimeExactNumberList();
+
   int getFirst();
 
   int getSecond();

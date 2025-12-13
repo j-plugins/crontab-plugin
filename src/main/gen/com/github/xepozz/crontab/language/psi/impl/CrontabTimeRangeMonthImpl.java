@@ -27,4 +27,10 @@ public class CrontabTimeRangeMonthImpl extends ASTWrapperPsiElement implements C
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<CrontabTimeExactMonth> getTimeExactMonthList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrontabTimeExactMonth.class);
+  }
+
 }

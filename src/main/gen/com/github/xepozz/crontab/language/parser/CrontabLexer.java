@@ -688,7 +688,7 @@ class CrontabLexer implements FlexLexer {
           // fall through
           case 39: break;
           case 20:
-            { return CrontabTypes.DAY;
+            { return CrontabTypes.WEEKDAY;
             }
           // fall through
           case 40: break;

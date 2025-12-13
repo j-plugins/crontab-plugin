@@ -32,7 +32,7 @@ DOUBLE_QUOTED_TEXT = \" (\\\" | [^\n\"])* \"
 SINGLE_QUOTED_TEXT = "'" (\\"'" | [^\n'])* "'"
 QUOTED_TEXT = {SINGLE_QUOTED_TEXT} | {DOUBLE_QUOTED_TEXT}
 
-DAY_PATTERN = (MON|TUE|WED|THU|FRI|SAT|SUN)
+WEEKDAY_PATTERN = (MON|TUE|WED|THU|FRI|SAT|SUN)
 MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
 
 %state COMMAND, SCHEDULE, VARIABLE, SIMPLE_SYNTAX
@@ -54,7 +54,7 @@ MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
     {SLASH}                                      { return CrontabTypes.SLASH; }
     {COMMA}                                      { return CrontabTypes.COMMA; }
     {HYPHEN}                                     { return CrontabTypes.HYPHEN; }
-    {DAY_PATTERN}                                { return CrontabTypes.DAY; }
+    {WEEKDAY_PATTERN}                            { return CrontabTypes.WEEKDAY; }
     {MONTH_PATTERN}                              { return CrontabTypes.MONTH; }
     {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
     ([^]|\/\D)                                   { yypushback(1); yybegin(COMMAND); }

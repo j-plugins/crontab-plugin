@@ -28,6 +28,12 @@ public class CrontabTimeRangeImpl extends CrontabTimeRangeBaseImpl implements Cr
   }
 
   @Override
+  @NotNull
+  public List<CrontabTimeExactNumber> getTimeExactNumberList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrontabTimeExactNumber.class);
+  }
+
+  @Override
   public int getFirst() {
     return CrontabImplUtil.getFirst(this);
   }

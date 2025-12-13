@@ -60,24 +60,24 @@ time_list ::= time_list_item (COMMA time_list_item)*
 
 time_list_item ::= time_range_step | time_range | time_range_day | time_range_month | time_exact_number | time_exact_day | time_exact_month | time_any
 
-time_range_step ::= (time_range | time_exact_number | time_any) SLASH NUMBER
+time_range_step ::= (time_range | time_exact_number | time_any) SLASH time_exact_number
 {
     pin=2
 }
 
-time_range ::= NUMBER HYPHEN NUMBER
+time_range ::= time_exact_number HYPHEN time_exact_number
 {
     pin=2
     implements=["com.intellij.psi.NavigatablePsiElement"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeRangeBaseImpl"
     methods=[getFirst getSecond getIntRange]
 }
-time_range_day ::= DAY HYPHEN DAY
-time_range_month ::= MONTH HYPHEN MONTH
+time_range_day ::= time_exact_day HYPHEN time_exact_day
+time_range_month ::= time_exact_month HYPHEN time_exact_month
 
 time_any ::= STAR
 time_exact_number ::= NUMBER
-time_exact_day ::= DAY
+time_exact_day ::= WEEKDAY
 time_exact_month ::= MONTH
 
 command ::= CONTENT | EOL

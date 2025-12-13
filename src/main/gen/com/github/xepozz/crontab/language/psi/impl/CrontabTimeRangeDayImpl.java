@@ -27,4 +27,10 @@ public class CrontabTimeRangeDayImpl extends ASTWrapperPsiElement implements Cro
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<CrontabTimeExactDay> getTimeExactDayList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrontabTimeExactDay.class);
+  }
+
 }

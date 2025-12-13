@@ -34,9 +34,9 @@ public class CrontabTimeRangeStepImpl extends ASTWrapperPsiElement implements Cr
   }
 
   @Override
-  @Nullable
-  public CrontabTimeExactNumber getTimeExactNumber() {
-    return findChildByClass(CrontabTimeExactNumber.class);
+  @NotNull
+  public List<CrontabTimeExactNumber> getTimeExactNumberList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CrontabTimeExactNumber.class);
   }
 
   @Override

@@ -10,8 +10,8 @@ public interface CrontabTimeRangeStep extends PsiElement {
   @Nullable
   CrontabTimeAny getTimeAny();
 
-  @Nullable
-  CrontabTimeExactNumber getTimeExactNumber();
+  @NotNull
+  List<CrontabTimeExactNumber> getTimeExactNumberList();
 
   @Nullable
   CrontabTimeRange getTimeRange();
