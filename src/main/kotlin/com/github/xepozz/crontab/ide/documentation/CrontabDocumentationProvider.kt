@@ -1,7 +1,7 @@
 package com.github.xepozz.crontab.ide.documentation
 
-import com.github.xepozz.crontab.ide.CronScheduleDescriber
 import com.github.xepozz.crontab.ide.CrontabGuruUtils
+import com.github.xepozz.crontab.ide.describe.CronScheduleDescriber
 import com.github.xepozz.crontab.language.CrontabFile
 import com.github.xepozz.crontab.language.psi.CrontabCommand
 import com.github.xepozz.crontab.language.psi.CrontabCronExpression
@@ -9,8 +9,6 @@ import com.github.xepozz.crontab.language.psi.CrontabSchedule
 import com.github.xepozz.crontab.language.psi.CrontabVariableDefinition
 import com.github.xepozz.crontab.language.psi.CrontabVariableName
 import com.github.xepozz.crontab.language.psi.CrontabVariableValue
-import com.intellij.extapi.psi.ASTDelegatePsiElement
-import com.intellij.lang.ASTNode
 import com.intellij.lang.documentation.DocumentationMarkup
 import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.lang.documentation.QuickDocHighlightingHelper
@@ -188,12 +186,4 @@ class CrontabDocumentationProvider : DocumentationProvider {
         append(DocumentationMarkup.SECTION_END)
         append(DocumentationMarkup.SECTIONS_END)
     }
-}
-
-open class PsiCommentDelegate(val myComment: PsiComment) : PsiComment, ASTDelegatePsiElement() {
-    override fun getTokenType() = myComment.tokenType
-
-    override fun getParent(): PsiElement? = myComment.parent
-
-    override fun getNode(): ASTNode = myComment.node
 }
