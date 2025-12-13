@@ -15,7 +15,7 @@ class CrontabSyntaxHighlighter : SyntaxHighlighterBase() {
     override fun getTokenHighlights(tokenType: IElementType) = when (tokenType) {
         CrontabTypes.EQUAL_SIGN -> OPERATION_KEYS
 
-        CrontabTypes.COMMENT -> COMMENT_KEYS
+        CrontabTypes.SINGLE_COMMENT -> COMMENT_KEYS
         TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
         else -> EMPTY_KEYS
     }

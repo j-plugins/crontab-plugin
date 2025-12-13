@@ -15,24 +15,24 @@
   psiImplUtilClass="com.github.xepozz.crontab.language.psi.impl.CrontabImplUtil"
 }
 
-crontabFile ::= item_*
+crontab_file ::= item_*
 
-private item_ ::= cronExpression | variableDefinition | COMMENT | NEWLINE
+private item_ ::= cron_expression | variable_definition | SINGLE_COMMENT | NEWLINE
 
-cronExpression ::= SCHEDULE COMMAND
+cron_expression ::= schedule command
 {
     pin=1
     implements=["com.intellij.psi.NavigatablePsiElement"]
 }
 
-variableDefinition ::= (VARIABLE_NAME EQUAL_SIGN VARIABLE_VALUE)
+variable_definition ::= (variable_name EQUAL_SIGN variable_value)
 {
     pin=1
     implements=["com.intellij.psi.NavigatablePsiElement"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabVariableBaseImpl"
 }
-VARIABLE_NAME ::= IDENTIFIER
-VARIABLE_VALUE ::= CONTENT
+variable_name ::= IDENTIFIER
+variable_value ::= CONTENT
 
 TIME_SHORTCUT ::= AT CONTENT
 {
@@ -40,41 +40,39 @@ TIME_SHORTCUT ::= AT CONTENT
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeShortcutBaseImpl"
 }
 
-SCHEDULE ::= (TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER TIME_POINTER) | TIME_SHORTCUT
+schedule ::= (time_pointer time_pointer time_pointer time_pointer time_pointer) | TIME_SHORTCUT
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLiteralValue"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabScheduleBaseImpl"
 }
 
-TIME_POINTER ::= TIME_LIST
-TIME_LIST ::= TIME_LIST_ITEM (COMMA TIME_LIST_ITEM)*
+time_pointer ::= time_list
+time_list ::= time_list_item (COMMA time_list_item)*
 
-TIME_LIST_ITEM ::= TIME_RANGE_STEP | TIME_RANGE | TIME_RANGE_DAY | TIME_RANGE_MONTH | TIME_EXACT_NUMBER | TIME_EXACT_DAY | TIME_EXACT_MONTH | TIME_ANY
+time_list_item ::= time_range_step | time_range | time_range_day | time_range_month | time_exact_number | time_exact_day | time_exact_month | time_any
 
-TIME_RANGE_STEP ::= (TIME_RANGE | TIME_EXACT_NUMBER | TIME_ANY) SLASH NUMBER
+time_range_step ::= (time_range | time_exact_number | time_any) SLASH NUMBER
 {
     pin=2
 }
 
-TIME_RANGE ::= NUMBER HYPHEN NUMBER
+time_range ::= NUMBER HYPHEN NUMBER
 {
     pin=2
     implements=["com.intellij.psi.NavigatablePsiElement"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeRangeBaseImpl"
     methods=[getFirst getSecond getIntRange]
 }
-TIME_RANGE_DAY ::= DAY HYPHEN DAY
-TIME_RANGE_MONTH ::= MONTH HYPHEN MONTH
+time_range_day ::= DAY HYPHEN DAY
+time_range_month ::= MONTH HYPHEN MONTH
 
-TIME_ANY ::= STAR
-TIME_EXACT_NUMBER ::= NUMBER
-TIME_EXACT_DAY ::= DAY
-TIME_EXACT_MONTH ::= MONTH
+time_any ::= STAR
+time_exact_number ::= NUMBER
+time_exact_day ::= DAY
+time_exact_month ::= MONTH
 
-COMMAND ::= CONTENT | NEWLINE
+command ::= CONTENT | NEWLINE
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLanguageInjectionHost"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabCommandBaseImpl"
 }
-
-COMMENT ::= SINGLE_COMMENT

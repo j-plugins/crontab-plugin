@@ -608,7 +608,7 @@ class CrontabLexer implements FlexLexer {
           // fall through
           case 23: break;
           case 4:
-            { return CrontabTypes.COMMENT;
+            { return CrontabTypes.SINGLE_COMMENT;
             }
           // fall through
           case 24: break;

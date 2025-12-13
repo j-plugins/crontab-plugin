@@ -10,13 +10,18 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 
 public class CrontabVisitor extends PsiElementVisitor {
 
+  public void visitTimeShortcut(@NotNull CrontabTimeShortcut o) {
+    visitNavigatablePsiElement(o);
+    // visitPsiLiteralValue(o);
+  }
+
   public void visitCommand(@NotNull CrontabCommand o) {
     visitNavigatablePsiElement(o);
     // visitPsiLanguageInjectionHost(o);
   }
 
-  public void visitComment(@NotNull CrontabComment o) {
-    visitPsiElement(o);
+  public void visitCronExpression(@NotNull CrontabCronExpression o) {
+    visitNavigatablePsiElement(o);
   }
 
   public void visitSchedule(@NotNull CrontabSchedule o) {
@@ -68,9 +73,8 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitTimeShortcut(@NotNull CrontabTimeShortcut o) {
+  public void visitVariableDefinition(@NotNull CrontabVariableDefinition o) {
     visitNavigatablePsiElement(o);
-    // visitPsiLiteralValue(o);
   }
 
   public void visitVariableName(@NotNull CrontabVariableName o) {
@@ -79,14 +83,6 @@ public class CrontabVisitor extends PsiElementVisitor {
 
   public void visitVariableValue(@NotNull CrontabVariableValue o) {
     visitPsiElement(o);
-  }
-
-  public void visitCronExpression(@NotNull CrontabCronExpression o) {
-    visitNavigatablePsiElement(o);
-  }
-
-  public void visitVariableDefinition(@NotNull CrontabVariableDefinition o) {
-    visitNavigatablePsiElement(o);
   }
 
   public void visitNavigatablePsiElement(@NotNull NavigatablePsiElement o) {

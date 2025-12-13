@@ -9,7 +9,6 @@ import com.github.xepozz.crontab.language.psi.impl.*;
 public interface CrontabTypes {
 
   IElementType COMMAND = new CrontabElementType("COMMAND");
-  IElementType COMMENT = new CrontabElementType("COMMENT");
   IElementType CRON_EXPRESSION = new CrontabElementType("CRON_EXPRESSION");
   IElementType SCHEDULE = new CrontabElementType("SCHEDULE");
   IElementType TIME_ANY = new CrontabElementType("TIME_ANY");
@@ -47,9 +46,6 @@ public interface CrontabTypes {
       IElementType type = node.getElementType();
       if (type == COMMAND) {
         return new CrontabCommandImpl(node);
-      }
-      else if (type == COMMENT) {
-        return new CrontabCommentImpl(node);
       }
       else if (type == CRON_EXPRESSION) {
         return new CrontabCronExpressionImpl(node);

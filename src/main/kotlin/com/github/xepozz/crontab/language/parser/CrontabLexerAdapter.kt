@@ -7,5 +7,5 @@ import com.intellij.psi.tree.TokenSet
 
 class CrontabLexerAdapter : MergingLexerAdapter(
     FlexAdapter(CrontabLexer(null)),
-    TokenSet.create(CrontabTypes.COMMENT, CrontabTypes.NEWLINE)
+    TokenSet.create(CrontabTypes.SINGLE_COMMENT, CrontabTypes.NEWLINE)
 )
