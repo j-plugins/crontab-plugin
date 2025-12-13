@@ -2,7 +2,6 @@
   parserClass="com.github.xepozz.crontab.language.parser.CrontabParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
-  extends(".*_pattern")=time_pointer
 
   psiClassPrefix="Crontab"
   psiImplClassSuffix="Impl"
@@ -49,13 +48,13 @@ schedule ::= (minute_pattern hour_pattern day_pattern month_pattern week_pattern
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabScheduleBaseImpl"
 }
 
-minute_pattern ::= time_pointer
-hour_pattern ::= time_pointer
-day_pattern ::= time_pointer
-month_pattern ::= time_pointer
-week_pattern ::= time_pointer
+minute_pattern ::= time_list { extends=time_pointer }
+hour_pattern ::= time_list { extends=time_pointer }
+day_pattern ::= time_list { extends=time_pointer }
+month_pattern ::= time_list { extends=time_pointer }
+week_pattern ::= time_list { extends=time_pointer }
 
-time_pointer ::= time_list
+fake time_pointer ::= time_list
 time_list ::= time_list_item (COMMA time_list_item)*
 
 time_list_item ::= time_range_step | time_range | time_range_day | time_range_month | time_exact_number | time_exact_day | time_exact_month | time_any
