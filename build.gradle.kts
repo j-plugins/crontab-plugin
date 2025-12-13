@@ -1,6 +1,5 @@
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import java.util.*
 
 plugins {
     id("java") // Java support
@@ -9,12 +8,6 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
-}
-
-val envProperties by lazy {
-    Properties().apply {
-        load(file(".env").inputStream())
-    }
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -92,7 +85,7 @@ intellijPlatform {
     }
 
     publishing {
-        token = provider { envProperties["PUBLISH_TOKEN"] as String }
+        token = providers.environmentVariable("PUBLISH_TOKEN")
         // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel

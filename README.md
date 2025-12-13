@@ -19,6 +19,7 @@ Crontab syntax support:
 - Human-readable schedule folding
 - Cron expression tester
 - Cron expression injection
+- Schedule grammar inspections
 - [crontab.guru](https://crontab.guru) integration
 
 ## Donation
