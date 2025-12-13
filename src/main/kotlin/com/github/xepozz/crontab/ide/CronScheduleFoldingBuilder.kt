@@ -1,5 +1,6 @@
 package com.github.xepozz.crontab.ide
 
+import com.github.xepozz.crontab.ide.describe.CronScheduleDescriber
 import com.github.xepozz.crontab.language.CrontabFile
 import com.github.xepozz.crontab.language.psi.CrontabSchedule
 import com.intellij.lang.ASTNode
