@@ -2,6 +2,7 @@
   parserClass="com.github.xepozz.crontab.language.parser.CrontabParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+  extends(".*_pattern")=time_pointer
 
   psiClassPrefix="Crontab"
   psiImplClassSuffix="Impl"
@@ -42,11 +43,17 @@ time_shortcut ::= AT CONTENT
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeShortcutBaseImpl"
 }
 
-schedule ::= (time_pointer time_pointer time_pointer time_pointer time_pointer) | time_shortcut
+schedule ::= (minute_pattern hour_pattern day_pattern month_pattern week_pattern) | time_shortcut
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLiteralValue"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabScheduleBaseImpl"
 }
+
+minute_pattern ::= time_pointer
+hour_pattern ::= time_pointer
+day_pattern ::= time_pointer
+month_pattern ::= time_pointer
+week_pattern ::= time_pointer
 
 time_pointer ::= time_list
 time_list ::= time_list_item (COMMA time_list_item)*

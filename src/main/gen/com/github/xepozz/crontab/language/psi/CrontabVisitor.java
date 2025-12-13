@@ -19,6 +19,22 @@ public class CrontabVisitor extends PsiElementVisitor {
     visitNavigatablePsiElement(o);
   }
 
+  public void visitDayPattern(@NotNull CrontabDayPattern o) {
+    visitTimePointer(o);
+  }
+
+  public void visitHourPattern(@NotNull CrontabHourPattern o) {
+    visitTimePointer(o);
+  }
+
+  public void visitMinutePattern(@NotNull CrontabMinutePattern o) {
+    visitTimePointer(o);
+  }
+
+  public void visitMonthPattern(@NotNull CrontabMonthPattern o) {
+    visitTimePointer(o);
+  }
+
   public void visitSchedule(@NotNull CrontabSchedule o) {
     visitNavigatablePsiElement(o);
     // visitPsiLiteralValue(o);
@@ -83,6 +99,10 @@ public class CrontabVisitor extends PsiElementVisitor {
 
   public void visitVariableValue(@NotNull CrontabVariableValue o) {
     visitPsiElement(o);
+  }
+
+  public void visitWeekPattern(@NotNull CrontabWeekPattern o) {
+    visitTimePointer(o);
   }
 
   public void visitNavigatablePsiElement(@NotNull NavigatablePsiElement o) {

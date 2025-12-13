@@ -10,6 +10,10 @@ public interface CrontabTypes {
 
   IElementType COMMAND = new CrontabElementType("COMMAND");
   IElementType CRON_EXPRESSION = new CrontabElementType("CRON_EXPRESSION");
+  IElementType DAY_PATTERN = new CrontabElementType("DAY_PATTERN");
+  IElementType HOUR_PATTERN = new CrontabElementType("HOUR_PATTERN");
+  IElementType MINUTE_PATTERN = new CrontabElementType("MINUTE_PATTERN");
+  IElementType MONTH_PATTERN = new CrontabElementType("MONTH_PATTERN");
   IElementType SCHEDULE = new CrontabElementType("SCHEDULE");
   IElementType TIME_ANY = new CrontabElementType("TIME_ANY");
   IElementType TIME_EXACT_DAY = new CrontabElementType("TIME_EXACT_DAY");
@@ -26,6 +30,7 @@ public interface CrontabTypes {
   IElementType VARIABLE_DEFINITION = new CrontabElementType("VARIABLE_DEFINITION");
   IElementType VARIABLE_NAME = new CrontabElementType("VARIABLE_NAME");
   IElementType VARIABLE_VALUE = new CrontabElementType("VARIABLE_VALUE");
+  IElementType WEEK_PATTERN = new CrontabElementType("WEEK_PATTERN");
 
   IElementType AT = new CrontabTokenType("AT");
   IElementType COMMA = new CrontabTokenType("COMMA");
