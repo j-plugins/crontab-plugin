@@ -42,16 +42,24 @@ object CronScheduleDescriber {
                 // Minute
                 add(
                     when {
-                        minute.matches(Regex("\\*/\\d+")) -> "every ${minute.substringAfter("/")} minute"
-                        else -> "at minute $minute"
+                        minute.matches(Regex("\\*/\\d+")) -> message(
+                            "crontab.schedule.every {0} minute",
+                            minute.substringAfter("/")
+                        )
+
+                        else -> message("crontab.schedule.at minute {0}", minute)
                     }
                 )
 
                 // Hour
                 add(
                     when {
-                        hour.matches(Regex("\\*/\\d+")) -> "every ${hour.substringAfter("/")} hour"
-                        else -> "past hour $hour"
+                        hour.matches(Regex("\\*/\\d+")) -> message(
+                            "crontab.schedule.every {0} hour",
+                            hour.substringAfter("/")
+                        )
+
+                        else -> message("crontab.schedule.past hour {0}", hour)
                     }
                 )
             }
@@ -60,7 +68,10 @@ object CronScheduleDescriber {
             if (dayOfMonth != "*") {
                 add(
                     when {
-                        dayOfMonth.matches(Regex("\\*/\\d+")) -> "every ${dayOfMonth.substringAfter("/")} day"
+                        dayOfMonth.matches(Regex("\\*/\\d+")) -> message(
+                            "crontab.schedule.every {0} day",
+                            dayOfMonth.substringAfter("/")
+                        )
                         else -> message("crontab.schedule.on day {0} of month", dayOfMonth)
                     }
                 )
@@ -70,7 +81,10 @@ object CronScheduleDescriber {
             if (month != "*") {
                 add(
                     when {
-                        month.matches(Regex("\\*/\\d+")) -> "every ${month.substringAfter("/")} month"
+                        month.matches(Regex("\\*/\\d+")) -> message(
+                            "crontab.schedule.every {0} month",
+                            month.substringAfter("/")
+                        )
                         else -> message("crontab.schedule.in month {0}", month)
                     }
                 )
