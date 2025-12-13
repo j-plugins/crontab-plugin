@@ -8,18 +8,18 @@ import com.intellij.psi.util.PsiTreeUtil
 
 object CrontabElementFactory {
     fun createCrontabTimeList(project: Project, values: List<String>): CrontabTimeList {
-        val file = createFile(project, values.joinToString(","))
+        val file = createFile(project, values.joinToString(",") + " * * * *")
 
         return PsiTreeUtil.findChildOfType(file, CrontabTimeList::class.java) as CrontabTimeList
     }
 
     fun createCrontabTimeRange(project: Project, first: Int, last: Int): CrontabTimeRange {
-        val file = createFile(project, "$first-$last")
+        val file = createFile(project, "$first-$last * * * *")
 
         return PsiTreeUtil.findChildOfType(file, CrontabTimeRange::class.java) as CrontabTimeRange
     }
     fun createCrontabTimeExact(project: Project, value: Int): CrontabTimeExactNumber {
-        val file = createFile(project, "$value")
+        val file = createFile(project, "$value * * * *")
 
         return PsiTreeUtil.findChildOfType(file, CrontabTimeExactNumber::class.java) as CrontabTimeExactNumber
     }

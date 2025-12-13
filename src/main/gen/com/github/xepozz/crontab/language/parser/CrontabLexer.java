@@ -603,7 +603,7 @@ class CrontabLexer implements FlexLexer {
           // fall through
           case 22: break;
           case 3:
-            { yybegin(YYINITIAL); return CrontabTypes.NEWLINE;
+            { yybegin(YYINITIAL); return CrontabTypes.EOL;
             }
           // fall through
           case 23: break;

@@ -31,11 +31,11 @@ public interface CrontabTypes {
   IElementType COMMA = new CrontabTokenType("COMMA");
   IElementType CONTENT = new CrontabTokenType("CONTENT");
   IElementType DAY = new CrontabTokenType("DAY");
+  IElementType EOL = new CrontabTokenType("EOL");
   IElementType EQUAL_SIGN = new CrontabTokenType("EQUAL_SIGN");
   IElementType HYPHEN = new CrontabTokenType("HYPHEN");
   IElementType IDENTIFIER = new CrontabTokenType("IDENTIFIER");
   IElementType MONTH = new CrontabTokenType("MONTH");
-  IElementType NEWLINE = new CrontabTokenType("NEWLINE");
   IElementType NUMBER = new CrontabTokenType("NUMBER");
   IElementType SINGLE_COMMENT = new CrontabTokenType("SINGLE_COMMENT");
   IElementType SLASH = new CrontabTokenType("SLASH");

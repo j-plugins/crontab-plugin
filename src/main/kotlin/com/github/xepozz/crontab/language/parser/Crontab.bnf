@@ -17,13 +17,15 @@
 
 crontab_file ::= item_*
 
-private item_ ::= cron_expression | variable_definition | SINGLE_COMMENT | NEWLINE
+private item_ ::= variable_definition | cron_expression | SINGLE_COMMENT | EOL
 
 cron_expression ::= schedule command
 {
     pin=1
     implements=["com.intellij.psi.NavigatablePsiElement"]
+    recoverWhile=cron_expression_recover
 }
+private cron_expression_recover ::= !(EOL)
 
 variable_definition ::= (variable_name EQUAL_SIGN variable_value)
 {
@@ -34,13 +36,13 @@ variable_definition ::= (variable_name EQUAL_SIGN variable_value)
 variable_name ::= IDENTIFIER
 variable_value ::= CONTENT
 
-TIME_SHORTCUT ::= AT CONTENT
+time_shortcut ::= AT CONTENT
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLiteralValue"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeShortcutBaseImpl"
 }
 
-schedule ::= (time_pointer time_pointer time_pointer time_pointer time_pointer) | TIME_SHORTCUT
+schedule ::= (time_pointer time_pointer time_pointer time_pointer time_pointer) | time_shortcut
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLiteralValue"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabScheduleBaseImpl"
@@ -71,7 +73,7 @@ time_exact_number ::= NUMBER
 time_exact_day ::= DAY
 time_exact_month ::= MONTH
 
-command ::= CONTENT | NEWLINE
+command ::= CONTENT | EOL
 {
     implements=["com.intellij.psi.NavigatablePsiElement" "com.intellij.psi.PsiLanguageInjectionHost"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabCommandBaseImpl"

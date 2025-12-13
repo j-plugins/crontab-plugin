@@ -27,15 +27,15 @@ public class CrontabScheduleImpl extends CrontabScheduleBaseImpl implements Cron
   }
 
   @Override
-  @Nullable
-  public CrontabTimeShortcut getTimeShortcut() {
-    return findChildByClass(CrontabTimeShortcut.class);
-  }
-
-  @Override
   @NotNull
   public List<CrontabTimePointer> getTimePointerList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CrontabTimePointer.class);
+  }
+
+  @Override
+  @Nullable
+  public CrontabTimeShortcut getTimeShortcut() {
+    return findChildByClass(CrontabTimeShortcut.class);
   }
 
 }

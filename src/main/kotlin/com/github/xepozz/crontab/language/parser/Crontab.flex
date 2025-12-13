@@ -34,13 +34,6 @@ QUOTED_TEXT = {SINGLE_QUOTED_TEXT} | {DOUBLE_QUOTED_TEXT}
 
 DAY_PATTERN = (MON|TUE|WED|THU|FRI|SAT|SUN)
 MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
-KEYWORD_YEARLY = "yearly"
-KEYWORD_ANNUALLY = "annually"
-KEYWORD_MONTHLY = "monthly"
-KEYWORD_WEEKLY = "weekly"
-KEYWORD_DAILY = "daily"
-KEYWORD_HOURLY = "hourly"
-KEYWORD_REBOOT = "reboot"
 
 %state COMMAND, SCHEDULE, VARIABLE, SIMPLE_SYNTAX
 %%
@@ -76,7 +69,7 @@ KEYWORD_REBOOT = "reboot"
 }
 
 {WHITESPACE}                                     { return TokenType.WHITE_SPACE; }
-{NEWLINE}                                        { yybegin(YYINITIAL); return CrontabTypes.NEWLINE; }
+{NEWLINE}                                        { yybegin(YYINITIAL); return CrontabTypes.EOL; }
 
 [^]                                              { return TokenType.BAD_CHARACTER; }
 //[^]                                              { throw new Error("Illegal character <"+yytext()+">"); }

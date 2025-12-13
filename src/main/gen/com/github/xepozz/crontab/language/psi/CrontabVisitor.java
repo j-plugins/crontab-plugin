@@ -10,11 +10,6 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 
 public class CrontabVisitor extends PsiElementVisitor {
 
-  public void visitTimeShortcut(@NotNull CrontabTimeShortcut o) {
-    visitNavigatablePsiElement(o);
-    // visitPsiLiteralValue(o);
-  }
-
   public void visitCommand(@NotNull CrontabCommand o) {
     visitNavigatablePsiElement(o);
     // visitPsiLanguageInjectionHost(o);
@@ -71,6 +66,11 @@ public class CrontabVisitor extends PsiElementVisitor {
 
   public void visitTimeRangeStep(@NotNull CrontabTimeRangeStep o) {
     visitPsiElement(o);
+  }
+
+  public void visitTimeShortcut(@NotNull CrontabTimeShortcut o) {
+    visitNavigatablePsiElement(o);
+    // visitPsiLiteralValue(o);
   }
 
   public void visitVariableDefinition(@NotNull CrontabVariableDefinition o) {

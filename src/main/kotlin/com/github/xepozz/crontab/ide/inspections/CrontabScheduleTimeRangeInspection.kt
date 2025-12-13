@@ -37,7 +37,7 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
 
 //                println("before: $before, after: $after")
                 if (before != after) {
-                    CrontabInspectionUtil.registerCollapseRangeList(holder, element)
+                    CrontabInspectionUtil.registerCollapseRangeList(holder, element, after)
                 }
                 super.visitTimeList(element)
             }

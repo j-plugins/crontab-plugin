@@ -9,10 +9,10 @@ import com.intellij.psi.PsiLiteralValue;
 
 public interface CrontabSchedule extends NavigatablePsiElement, PsiLiteralValue {
 
-  @Nullable
-  CrontabTimeShortcut getTimeShortcut();
-
   @NotNull
   List<CrontabTimePointer> getTimePointerList();
+
+  @Nullable
+  CrontabTimeShortcut getTimeShortcut();
 
 }

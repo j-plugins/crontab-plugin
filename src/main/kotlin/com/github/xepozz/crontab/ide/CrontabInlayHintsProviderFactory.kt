@@ -13,9 +13,8 @@ class CrontabInlayHintsProviderFactory : InlayHintsProviderFactory {
         providerId = providerId,
         options = emptySet(),
         isEnabledByDefault = true,
-        providerName = CrontabInlayHintsProvider::class.java.name
+        providerName = "Crontab Inlay Hints"
     )
-
 
     override fun getProvidersForLanguage(language: Language) = listOf(getProviderInfo(language, "crontab"))
 

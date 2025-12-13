@@ -36,26 +36,14 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AT CONTENT
-  public static boolean TIME_SHORTCUT(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "TIME_SHORTCUT")) return false;
-    if (!nextTokenIs(b, AT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, AT, CONTENT);
-    exit_section_(b, m, TIME_SHORTCUT, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // CONTENT | NEWLINE
+  // CONTENT | EOL
   public static boolean command(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "command")) return false;
-    if (!nextTokenIs(b, "<command>", CONTENT, NEWLINE)) return false;
+    if (!nextTokenIs(b, "<command>", CONTENT, EOL)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, COMMAND, "<command>");
     r = consumeToken(b, CONTENT);
-    if (!r) r = consumeToken(b, NEWLINE);
+    if (!r) r = consumeToken(b, EOL);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -69,8 +57,19 @@ public class CrontabParser implements PsiParser, LightPsiParser {
     r = schedule(b, l + 1);
     p = r; // pin = 1
     r = r && command(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
+    exit_section_(b, l, m, r, p, CrontabParser::cron_expression_recover);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // !(EOL)
+  static boolean cron_expression_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cron_expression_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !consumeToken(b, EOL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -86,25 +85,27 @@ public class CrontabParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // cron_expression | variable_definition | SINGLE_COMMENT | NEWLINE
+  // variable_definition | cron_expression | SINGLE_COMMENT | EOL
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
-    r = cron_expression(b, l + 1);
-    if (!r) r = variable_definition(b, l + 1);
+    Marker m = enter_section_(b);
+    r = variable_definition(b, l + 1);
+    if (!r) r = cron_expression(b, l + 1);
     if (!r) r = consumeToken(b, SINGLE_COMMENT);
-    if (!r) r = consumeToken(b, NEWLINE);
+    if (!r) r = consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (time_pointer time_pointer time_pointer time_pointer time_pointer) | TIME_SHORTCUT
+  // (time_pointer time_pointer time_pointer time_pointer time_pointer) | time_shortcut
   public static boolean schedule(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "schedule")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, SCHEDULE, "<schedule>");
     r = schedule_0(b, l + 1);
-    if (!r) r = TIME_SHORTCUT(b, l + 1);
+    if (!r) r = time_shortcut(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -292,6 +293,18 @@ public class CrontabParser implements PsiParser, LightPsiParser {
     r = time_range(b, l + 1);
     if (!r) r = time_exact_number(b, l + 1);
     if (!r) r = time_any(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // AT CONTENT
+  public static boolean time_shortcut(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "time_shortcut")) return false;
+    if (!nextTokenIs(b, AT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, AT, CONTENT);
+    exit_section_(b, m, TIME_SHORTCUT, r);
     return r;
   }
 
