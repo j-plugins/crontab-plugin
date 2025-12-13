@@ -6,3 +6,4 @@
 .env
 .kotlin
 build
+src/main/gen
