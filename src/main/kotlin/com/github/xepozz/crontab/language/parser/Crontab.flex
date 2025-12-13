@@ -45,7 +45,7 @@ KEYWORD_REBOOT = "reboot"
 %state COMMAND, SCHEDULE, VARIABLE, SIMPLE_SYNTAX
 %%
 <YYINITIAL> {
-    {SINGLE_COMMENT}({NEWLINE}{SINGLE_COMMENT})* { return CrontabTypes.COMMENT; }
+    {SINGLE_COMMENT}                             { return CrontabTypes.COMMENT; }
     {STAR}                                       { yybegin(SCHEDULE); return CrontabTypes.STAR; }
     {NUMBER}                                     { yybegin(SCHEDULE); return CrontabTypes.NUMBER; }
     {IDENTIFIER}                                 { yybegin(VARIABLE); return CrontabTypes.IDENTIFIER; }
@@ -74,7 +74,6 @@ KEYWORD_REBOOT = "reboot"
     {WHITESPACE}                                 { return TokenType.WHITE_SPACE; }
     ([\s][^])                                    { yypushback(yylength()); yybegin(COMMAND); }
 }
-
 
 {WHITESPACE}                                     { return TokenType.WHITE_SPACE; }
 {NEWLINE}                                        { yybegin(YYINITIAL); return CrontabTypes.NEWLINE; }
