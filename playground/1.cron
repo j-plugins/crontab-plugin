@@ -1,0 +1,42 @@
+# Comments are alright
+
+## Variables are also ok
+PWD = '/my/dir/2'
+
+# # Shows current working directory and that's all
+# ## H2
+# ### H3
+# ```php
+# echo 123
+# ```
+
+
+* * * * * ls -la
+24 24 */2 * * ls -la
+0 4 2 * * ls -la
+
+*/4 * 2-90/2 Mon-Fri Jan-feb     /usr/local/bin/php
+*/4 * * * * echo ${PWD}
+*/4 * * * * ls -la
+
+@daily mkdor
+@daily mkdir "dirname"
+@daily echo hash
+
+*/4 10-10 * * * mkdir "dirname" -la # this is a comment for the shell command
+
+1,2  ** ** echo let
+
+1,2,3,4,5 * * * * yii scheduler/trigger --verbose >/dev/null 2>&1
+
+## Collapsed string
+## Collapsed string
+1,2,3,4,5 * * * * yii scheduler/trigger --verbose >/dev/null 2>&1
+
+*/4 * * * *     /usr/local/bin/php
+*/4 * 2/2 1-10/1 *     /usr/local/bin/php
+*/4 * 2/2 Mon-Fri jan     /usr/local/bin/php
+
+1,2 * * * *
+
+
