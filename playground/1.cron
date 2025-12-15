@@ -37,6 +37,7 @@ PWD = '/my/dir/2'
 */4 * 2/2 1-10/1 *     /usr/local/bin/php
 */4 * 2/2 Mon-Fri jan     /usr/local/bin/php
 
-1,2 * * * *
+1,2 * * * * q
 
-
+@reboot root /bin/bash echo
+@reboot  root /bin/bash echo
