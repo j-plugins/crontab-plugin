@@ -53,6 +53,8 @@
                 language="Crontab" enabledByDefault="true" level="ERROR"
                 groupName="Crontab schedule" displayName="Crontab schedule"
                 implementationClass="com.github.xepozz.crontab.ide.inspections.CrontabScheduleTimeRangeInspection"/>
+        <editorNotificationProvider
+                implementation="com.github.xepozz.crontab.ide.editor.EditorNotificationProvider"/>
 
         <intentionAction>
             <language>Crontab</language>
