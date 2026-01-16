@@ -82,34 +82,34 @@ object CrontabInspectionUtil {
         )
     }
 
-    fun registerMinuteOverlaps(holder: ProblemsHolder, element: PsiElement) {
+    fun registerMinuteOverlaps(holder: ProblemsHolder, element: PsiElement, range: IntRange) {
         holder.registerProblem(
             element,
-            "Minute pattern should be in range 0-59.",
+            "Minute pattern should be in range ${range.first}-${range.last}.",
             ProblemHighlightType.ERROR,
         )
     }
 
-    fun registerHourOverlaps(holder: ProblemsHolder, element: PsiElement) {
+    fun registerHourOverlaps(holder: ProblemsHolder, element: PsiElement, range: IntRange) {
         holder.registerProblem(
             element,
-            "Hour pattern should be in range 0-23.",
+            "Hour pattern should be in range ${range.first}-${range.last}.",
             ProblemHighlightType.ERROR,
         )
     }
 
-    fun registerDayOverlaps(holder: ProblemsHolder, element: PsiElement) {
+    fun registerDayOverlaps(holder: ProblemsHolder, element: PsiElement, range: IntRange) {
         holder.registerProblem(
             element,
-            "Day pattern should be in range 1-31.",
+            "Day pattern should be in range ${range.first}-${range.last}.",
             ProblemHighlightType.ERROR,
         )
     }
 
-    fun registerMonthNumberOverlaps(holder: ProblemsHolder, element: PsiElement) {
+    fun registerMonthNumberOverlaps(holder: ProblemsHolder, element: PsiElement, range: IntRange) {
         holder.registerProblem(
             element,
-            "Month pattern should be in range 1-12.",
+            "Month pattern should be in range ${range.first}-${range.last}.",
             ProblemHighlightType.ERROR,
         )
     }
@@ -122,10 +122,10 @@ object CrontabInspectionUtil {
         )
     }
 
-    fun registerWeekdayNumberOverlaps(holder: ProblemsHolder, element: PsiElement) {
+    fun registerWeekdayNumberOverlaps(holder: ProblemsHolder, element: PsiElement, range: IntRange) {
         holder.registerProblem(
             element,
-            "Weekday pattern should be in range 0-6.",
+            "Weekday pattern should be in range ${range.first}-${range.last}",
             ProblemHighlightType.ERROR,
         )
     }

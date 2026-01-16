@@ -51,9 +51,10 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
         override fun visitMinutePattern(element: CrontabMinutePattern) {
             element.accept(object : CrontabRecursiveVisitor() {
                 override fun visitTimeExactNumber(o: CrontabTimeExactNumber) {
+                    val range = 0..59
                     when (o.text.toIntOrNull()) {
                         null -> return
-                        !in 0..59 -> CrontabInspectionUtil.registerMinuteOverlaps(holder, o)
+                        !in range -> CrontabInspectionUtil.registerMinuteOverlaps(holder, o, range)
                     }
                     super.visitTimeExactNumber(o)
                 }
@@ -64,7 +65,14 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
 
         override fun visitHourPattern(element: CrontabHourPattern) {
             element.accept(object : CrontabRecursiveVisitor() {
-
+                override fun visitTimeExactNumber(o: CrontabTimeExactNumber) {
+                    val range = 0..23
+                    when (o.text.toIntOrNull()) {
+                        null -> return
+                        !in range -> CrontabInspectionUtil.registerHourOverlaps(holder, o, range)
+                    }
+                    super.visitTimeExactNumber(o)
+                }
             })
 
             super.visitHourPattern(element)
@@ -73,9 +81,10 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
         override fun visitDayPattern(element: CrontabDayPattern) {
             element.accept(object : CrontabRecursiveVisitor() {
                 override fun visitTimeExactNumber(o: CrontabTimeExactNumber) {
+                    val range = 1..31
                     when (o.text.toIntOrNull()) {
                         null -> return
-                        !in 1..31 -> CrontabInspectionUtil.registerDayOverlaps(holder, o)
+                        !in range -> CrontabInspectionUtil.registerDayOverlaps(holder, o, range)
                     }
                     super.visitTimeExactNumber(o)
                 }
@@ -87,9 +96,10 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
         override fun visitMonthPattern(element: CrontabMonthPattern) {
             element.accept(object : CrontabRecursiveVisitor() {
                 override fun visitTimeExactNumber(o: CrontabTimeExactNumber) {
+                    val range = 1..12
                     when (o.text.toIntOrNull()) {
                         null -> return
-                        !in 1..12 -> CrontabInspectionUtil.registerMonthNumberOverlaps(holder, o)
+                        !in range -> CrontabInspectionUtil.registerMonthNumberOverlaps(holder, o, range)
                     }
                     super.visitTimeExactNumber(o)
                 }
@@ -108,9 +118,10 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
         override fun visitWeekPattern(element: CrontabWeekPattern) {
             element.accept(object : CrontabRecursiveVisitor() {
                 override fun visitTimeExactNumber(o: CrontabTimeExactNumber) {
+                    val range = 0..7
                     when (o.text.toIntOrNull()) {
                         null -> return
-                        !in 0..6 -> CrontabInspectionUtil.registerWeekdayNumberOverlaps(holder, o)
+                        !in range -> CrontabInspectionUtil.registerWeekdayNumberOverlaps(holder, o, range)
                     }
                     super.visitTimeExactNumber(o)
                 }
