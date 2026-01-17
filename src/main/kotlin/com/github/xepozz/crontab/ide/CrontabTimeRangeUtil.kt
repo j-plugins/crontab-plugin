@@ -72,12 +72,12 @@ object CrontabTimeRangeUtil {
             if (item.contains("-")) {
                 // Handle range
                 val parts = item.split("-")
-                val start = parts[0].toInt()
-                val end = parts[1].toInt()
+                val start = parts[0].toIntOrNull() ?: continue
+                val end = parts[1].toIntOrNull() ?: continue
                 numbers.addAll(start..end)
             } else {
                 // Handle individual number
-                numbers.add(item.toInt())
+                numbers.add(item.toIntOrNull() ?: continue)
             }
         }
         return numbers
