@@ -60,7 +60,7 @@ MONTH_PATTERN = (JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)
     ([^]|\/\D)                                   { yypushback(1); yybegin(COMMAND); }
 }
 <COMMAND> {
-    [^\s][^\n]*                                  { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }
+    [^\s]([^\n]|\\(\r\n|\n|\r))*                { yybegin(YYINITIAL); return CrontabTypes.CONTENT; }
 }
 <SIMPLE_SYNTAX> {
     [^\s]+                                       { return CrontabTypes.CONTENT; }

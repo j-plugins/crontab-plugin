@@ -41,3 +41,11 @@ PWD = '/my/dir/2'
 
 @reboot root /bin/bash echo
 @reboot  root /bin/bash echo
+
+# Multiline commands with backslash continuation
+*/5 * * * * echo "hello" \
+  && echo "world"
+0 3 * * * /usr/local/bin/backup.sh \
+  --source /data \
+  --dest /backup \
+  --verbose
