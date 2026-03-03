@@ -1,0 +1,50 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v4
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build plugin
+        run: ./gradlew buildPlugin
+
+      - name: Run Tests
+        run: ./gradlew check
+
+      - name: Collect Tests Result
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-result
+          path: ${{ github.workspace }}/build/reports/tests
+
+      - name: Upload Code Coverage Report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: ${{ github.workspace }}/build/reports/kover/report.xml

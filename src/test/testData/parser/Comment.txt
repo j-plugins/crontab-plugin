@@ -1,0 +1,2 @@
+Crontab File
+  PsiElement(CrontabTokenType.SINGLE_COMMENT)('# This is a comment')

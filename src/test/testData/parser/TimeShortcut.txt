@@ -1,0 +1,8 @@
+Crontab File
+  CrontabElementType(CRON_EXPRESSION)
+    CrontabElementType(SCHEDULE)
+      CrontabElementType(TIME_SHORTCUT)
+        PsiElement(CrontabTokenType.AT)('@')
+        PsiElement(CrontabTokenType.CONTENT)('daily')
+    CrontabElementType(COMMAND)
+      PsiElement(CrontabTokenType.CONTENT)('mkdir "dirname"')

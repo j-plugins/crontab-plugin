@@ -1,0 +1,7 @@
+Crontab File
+  CrontabElementType(VARIABLE_DEFINITION)
+    CrontabElementType(VARIABLE_NAME)
+      PsiElement(CrontabTokenType.IDENTIFIER)('PWD')
+    PsiElement(CrontabTokenType.EQUAL_SIGN)('=')
+    CrontabElementType(VARIABLE_VALUE)
+      PsiElement(CrontabTokenType.CONTENT)('''/my/dir''')

@@ -1,0 +1,6 @@
+# Variables section
+PWD = '/my/dir'
+
+# Run every 4 minutes
+*/4 * * * * mkdir "dirname" -la
+@daily echo hello

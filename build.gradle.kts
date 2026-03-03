@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
+    alias(libs.plugins.grammarkit) // Grammar Kit Plugin for parser/lexer generation
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -111,6 +112,28 @@ kover {
 }
 
 tasks {
+    generateLexer {
+        sourceFile.set(file("src/main/kotlin/com/github/xepozz/crontab/language/parser/Crontab.flex"))
+        targetOutputDir.set(file("src/main/gen/com/github/xepozz/crontab/language/parser"))
+        purgeOldFiles.set(true)
+    }
+
+    generateParser {
+        sourceFile.set(file("src/main/kotlin/com/github/xepozz/crontab/language/parser/Crontab.bnf"))
+        targetRootOutputDir.set(file("src/main/gen"))
+        pathToParser.set("com/github/xepozz/crontab/language/parser/CrontabParser.java")
+        pathToPsiRoot.set("com/github/xepozz/crontab/language/psi")
+        purgeOldFiles.set(true)
+    }
+
+    compileKotlin {
+        dependsOn(generateLexer, generateParser)
+    }
+
+    compileJava {
+        dependsOn(generateLexer, generateParser)
+    }
+
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
