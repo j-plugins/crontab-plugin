@@ -11,4 +11,4 @@ PWD = '/my/dir'
 1,2,3,4,5 * * * * yii scheduler/trigger --verbose >/dev/null 2>&1
 
 
-*/4 * * * *     /usr/local/bin/php
+*/4 * 1-10,3-2/35 * *     /usr/local/bin/php
