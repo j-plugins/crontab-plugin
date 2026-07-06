@@ -1,30 +1,26 @@
 package com.github.xepozz.crontab.ide
 
 import com.github.xepozz.crontab.language.psi.CrontabTimeList
+import com.github.xepozz.crontab.language.psi.impl.CrontabImplUtil
 
 object CrontabTimeRangeUtil {
-    fun expandRanges(element: CrontabTimeList): Set<Int> {
-        val input = element.timeListItemList
-            .mapNotNull {
-                when {
-                    it.timeRange != null -> "${it.timeRange!!.text}"
-                    it.timeExactNumber != null -> "${it.timeExactNumber!!.text}"
-                    else -> null
-                }
+    fun canCollapseRanges(element: CrontabTimeList): Boolean {
+        return element.timeListItemList.all {
+            val range = it.timeRange
+            when {
+                it.timeExactNumber != null -> true
+                range != null -> CrontabImplUtil.getFirst(range) <= CrontabImplUtil.getSecond(range)
+                else -> false
             }
-        return expandRanges(input)
+        }
+    }
+
+    fun expandRanges(element: CrontabTimeList): Set<Int> {
+        return expandRanges(element.numericItems())
     }
 
     fun collapseRanges(element: CrontabTimeList): List<String> {
-        val input = element.timeListItemList
-            .mapNotNull {
-                when {
-                    it.timeRange != null -> "${it.timeRange!!.text}"
-                    it.timeExactNumber != null -> "${it.timeExactNumber!!.text}"
-                    else -> null
-                }
-            }
-        return collapseRanges(input)
+        return collapseRanges(element.numericItems())
     }
 
     fun collapseRanges(input: List<String>): List<String> {
@@ -37,28 +33,29 @@ object CrontabTimeRangeUtil {
         var rangeStart = sortedNumbers[0]
         var rangeEnd = sortedNumbers[0]
 
+        fun addRange(start: Int, end: Int) {
+            when {
+                start == end -> result.add("$start")
+                start + 1 == end -> {
+                    result.add("$start")
+                    result.add("$end")
+                }
+
+                else -> result.add("$start-$end")
+            }
+        }
+
         for (i in 1 until sortedNumbers.size) {
             if (sortedNumbers[i] == rangeEnd + 1) {
                 rangeEnd = sortedNumbers[i]
             } else {
-                if (rangeStart == rangeEnd) {
-                    result.add("$rangeStart")
-                } else {
-                    result.add("$rangeStart-$rangeEnd")
-                }
+                addRange(rangeStart, rangeEnd)
                 rangeStart = sortedNumbers[i]
                 rangeEnd = sortedNumbers[i]
             }
         }
 
-        // Add the last range
-        if (rangeStart == rangeEnd) {
-            result.add("$rangeStart")
-        } else if (rangeStart + 1 == rangeEnd) {
-            result.add("$rangeStart,$rangeEnd")
-        } else {
-            result.add("$rangeStart-$rangeEnd")
-        }
+        addRange(rangeStart, rangeEnd)
 
         return result
     }
@@ -69,17 +66,22 @@ object CrontabTimeRangeUtil {
 
         // Parse the input and collect all individual numbers and ranges
         for (item in input) {
-            if (item.contains("-")) {
-                // Handle range
+            if ("-" in item) {
                 val parts = item.split("-")
+                if (parts.size != 2) continue
                 val start = parts[0].toIntOrNull() ?: continue
                 val end = parts[1].toIntOrNull() ?: continue
                 numbers.addAll(start..end)
             } else {
-                // Handle individual number
                 numbers.add(item.toIntOrNull() ?: continue)
             }
         }
         return numbers
+    }
+
+    private fun CrontabTimeList.numericItems(): List<String> {
+        return timeListItemList.mapNotNull {
+            it.timeRange?.text ?: it.timeExactNumber?.text
+        }
     }
 }

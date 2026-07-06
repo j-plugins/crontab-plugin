@@ -27,7 +27,7 @@ class CrontabGuruIntention : PsiElementBaseIntentionAction(), Iconable, DumbAwar
     }
 
     override fun isAvailable(project: Project, editor: Editor?, element: PsiElement): Boolean {
-        return element.containingFile is CrontabFile
+        return element.containingFile is CrontabFile && CrontabPsiTreeUtils.findCrontabSchedule(element) != null
     }
 
     override fun generatePreview(project: Project, editor: Editor, file: PsiFile) = IntentionPreviewInfo.EMPTY

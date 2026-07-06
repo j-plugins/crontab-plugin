@@ -51,7 +51,7 @@ class CrontabDocumentationProvider : DocumentationProvider {
             is CrontabSchedule -> {
                 val file = SymbolPresentationUtil.getFilePathPresentation(element.containingFile)
                 val cronExpression = element.parent as? CrontabCronExpression
-                val command = cronExpression?.children[1] as? CrontabCommand
+                val command = cronExpression?.command
                 val docComment = CrontabDocumentationUtils.findCrontabElementDocumentation(cronExpression)
 
                 renderFullDoc(element, command, file, docComment, element.project)
@@ -60,7 +60,7 @@ class CrontabDocumentationProvider : DocumentationProvider {
             is CrontabVariableName -> {
                 val file = SymbolPresentationUtil.getFilePathPresentation(element.containingFile)
                 val variableDefinition = element.parent as? CrontabVariableDefinition
-                val value = variableDefinition?.children[1] as? CrontabVariableValue
+                val value = variableDefinition?.variableValue
                 val docComment = CrontabDocumentationUtils.findCrontabElementDocumentation(variableDefinition)
 
                 renderFullDoc(element, value, file, docComment, element.project)
@@ -73,15 +73,9 @@ class CrontabDocumentationProvider : DocumentationProvider {
     override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String? {
         return when (element) {
             is CrontabSchedule -> CronScheduleDescriber.asHumanReadable(element.text)
-            is CrontabVariableName -> {
-                val parent = element.parent as CrontabVariableDefinition
-
-                "${parent.variableValue}"
-            }
-
-            else -> "element.text: ${element?.text}"
+            is CrontabVariableName -> (element.parent as? CrontabVariableDefinition)?.variableValue?.text
+            else -> element?.text
         }
-        return null
     }
 
     override fun generateRenderedDoc(comment: PsiDocCommentBase) = markdownToHtml(comment.text, comment.project)

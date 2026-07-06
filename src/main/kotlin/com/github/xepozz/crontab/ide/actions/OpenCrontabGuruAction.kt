@@ -22,7 +22,8 @@ class OpenCrontabGuruAction : AnAction() {
     }
 
     override fun update(event: AnActionEvent) {
-        println("call update $event")
+        event.presentation.isEnabledAndVisible = false
+
         val editor = event.getData(CommonDataKeys.EDITOR) ?: return
         val psiFile = event.getData(CommonDataKeys.PSI_FILE) as? CrontabFile ?: return
         val psiElement = psiFile.findElementAt(editor.caretModel.offset) ?: return

@@ -8,11 +8,14 @@ import com.github.xepozz.crontab.language.psi.CrontabMinutePattern
 import com.github.xepozz.crontab.language.psi.CrontabMonthPattern
 import com.github.xepozz.crontab.language.psi.CrontabRecursiveVisitor
 import com.github.xepozz.crontab.language.psi.CrontabTimeExactDay
+import com.github.xepozz.crontab.language.psi.CrontabTimeExactMonth
 import com.github.xepozz.crontab.language.psi.CrontabTimeExactNumber
 import com.github.xepozz.crontab.language.psi.CrontabTimeList
 import com.github.xepozz.crontab.language.psi.CrontabTimeRange
+import com.github.xepozz.crontab.language.psi.CrontabTimeRangeStep
 import com.github.xepozz.crontab.language.psi.CrontabVisitor
 import com.github.xepozz.crontab.language.psi.CrontabWeekPattern
+import com.github.xepozz.crontab.language.psi.impl.CrontabImplUtil
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiFile
@@ -24,12 +27,13 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean) = object : CrontabVisitor() {
         override fun visitTimeRange(element: CrontabTimeRange) {
-//                println("before: ${element.first}, after: ${element.second}")
+            val first = CrontabImplUtil.getFirst(element)
+            val second = CrontabImplUtil.getSecond(element)
 
-            if (element.first > element.second) {
+            if (first > second) {
                 CrontabInspectionUtil.registerSwapRange(holder, element)
             }
-            if (element.first == element.second) {
+            if (first == second) {
                 CrontabInspectionUtil.registerSimplifyRange(holder, element)
             }
             super.visitTimeRange(element)
@@ -37,15 +41,25 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
 
         override fun visitTimeList(element: CrontabTimeList) {
             if (element.timeListItemList.size == 1) return
+            if (!CrontabTimeRangeUtil.canCollapseRanges(element)) return
 
             val before = element.text
             val after = CrontabTimeRangeUtil.collapseRanges(element).joinToString(",")
+            if (after.isEmpty()) return
 
-//                println("before: $before, after: $after")
             if (before != after) {
                 CrontabInspectionUtil.registerCollapseRangeList(holder, element, after)
             }
             super.visitTimeList(element)
+        }
+
+        override fun visitTimeRangeStep(element: CrontabTimeRangeStep) {
+            val step = element.timeExactNumberList.lastOrNull()
+            if (step?.text?.toIntOrNull() == 0) {
+                CrontabInspectionUtil.registerStepOverlaps(holder, step)
+            }
+
+            super.visitTimeRangeStep(element)
         }
 
         override fun visitMinutePattern(element: CrontabMinutePattern) {
@@ -57,6 +71,16 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                         !in range -> CrontabInspectionUtil.registerMinuteOverlaps(holder, o, range)
                     }
                     super.visitTimeExactNumber(o)
+                }
+
+                override fun visitTimeExactDay(o: CrontabTimeExactDay) {
+                    CrontabInspectionUtil.registerMinuteTextOverlaps(holder, o)
+                    super.visitTimeExactDay(o)
+                }
+
+                override fun visitTimeExactMonth(o: CrontabTimeExactMonth) {
+                    CrontabInspectionUtil.registerMinuteTextOverlaps(holder, o)
+                    super.visitTimeExactMonth(o)
                 }
             })
 
@@ -73,6 +97,16 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                     }
                     super.visitTimeExactNumber(o)
                 }
+
+                override fun visitTimeExactDay(o: CrontabTimeExactDay) {
+                    CrontabInspectionUtil.registerHourTextOverlaps(holder, o)
+                    super.visitTimeExactDay(o)
+                }
+
+                override fun visitTimeExactMonth(o: CrontabTimeExactMonth) {
+                    CrontabInspectionUtil.registerHourTextOverlaps(holder, o)
+                    super.visitTimeExactMonth(o)
+                }
             })
 
             super.visitHourPattern(element)
@@ -87,6 +121,16 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                         !in range -> CrontabInspectionUtil.registerDayOverlaps(holder, o, range)
                     }
                     super.visitTimeExactNumber(o)
+                }
+
+                override fun visitTimeExactDay(o: CrontabTimeExactDay) {
+                    CrontabInspectionUtil.registerDayTextOverlaps(holder, o)
+                    super.visitTimeExactDay(o)
+                }
+
+                override fun visitTimeExactMonth(o: CrontabTimeExactMonth) {
+                    CrontabInspectionUtil.registerDayTextOverlaps(holder, o)
+                    super.visitTimeExactMonth(o)
                 }
             })
 
@@ -131,6 +175,11 @@ class CrontabScheduleTimeRangeInspection : LocalInspectionTool() {
                         CrontabInspectionUtil.registerWeekdayTextOverlaps(holder, o)
                     }
                     super.visitTimeExactDay(o)
+                }
+
+                override fun visitTimeExactMonth(o: CrontabTimeExactMonth) {
+                    CrontabInspectionUtil.registerWeekdayTextOverlaps(holder, o)
+                    super.visitTimeExactMonth(o)
                 }
             })
 

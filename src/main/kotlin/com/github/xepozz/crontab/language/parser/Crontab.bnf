@@ -11,8 +11,6 @@
   elementTypeHolderClass="com.github.xepozz.crontab.language.psi.CrontabTypes"
   elementTypeClass="com.github.xepozz.crontab.language.psi.CrontabElementType"
   tokenTypeClass="com.github.xepozz.crontab.language.psi.CrontabTokenType"
-
-  psiImplUtilClass="com.github.xepozz.crontab.language.psi.impl.CrontabImplUtil"
 }
 
 crontab_file ::= item_*
@@ -69,7 +67,6 @@ time_range ::= time_exact_number HYPHEN time_exact_number
     pin=2
     implements=["com.intellij.psi.NavigatablePsiElement"]
     extends="com.github.xepozz.crontab.language.psi.impl.CrontabTimeRangeBaseImpl"
-    methods=[getFirst getSecond getIntRange]
 }
 time_range_day ::= time_exact_day HYPHEN time_exact_day
 time_range_month ::= time_exact_month HYPHEN time_exact_month

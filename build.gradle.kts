@@ -1,4 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
@@ -8,14 +10,19 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
+    alias(libs.plugins.grammarKit) // GrammarKit/JFlex generation
 }
 
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
+
+val generatedParserDir = layout.buildDirectory.dir("generated-src/grammarKit/parser")
+val generatedLexerDir = layout.buildDirectory.dir("generated-src/grammarKit/lexer")
+
 sourceSets {
     main {
         java {
-            srcDirs("src/main/java", "src/main/gen")
+            srcDirs("src/main/java", generatedParserDir, generatedLexerDir)
         }
     }
 }
@@ -111,6 +118,28 @@ kover {
 }
 
 tasks {
+    generateParser {
+        sourceFile.set(layout.projectDirectory.file("src/main/kotlin/com/github/xepozz/crontab/language/parser/Crontab.bnf"))
+        targetRootOutputDir.set(generatedParserDir)
+        pathToParser.set("com/github/xepozz/crontab/language/parser/CrontabParser.java")
+        pathToPsiRoot.set("com/github/xepozz/crontab/language/psi")
+        purgeOldFiles.set(true)
+    }
+
+    generateLexer {
+        sourceFile.set(layout.projectDirectory.file("src/main/kotlin/com/github/xepozz/crontab/language/parser/Crontab.flex"))
+        targetOutputDir.set(generatedLexerDir.map { it.dir("com/github/xepozz/crontab/language/parser") })
+        purgeOldFiles.set(true)
+    }
+
+    withType<JavaCompile>().configureEach {
+        dependsOn(withType<GenerateParserTask>(), withType<GenerateLexerTask>())
+    }
+
+    compileKotlin {
+        dependsOn(withType<GenerateParserTask>(), withType<GenerateLexerTask>())
+    }
+
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }

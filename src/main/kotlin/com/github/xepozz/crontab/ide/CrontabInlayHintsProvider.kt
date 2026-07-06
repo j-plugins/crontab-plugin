@@ -35,14 +35,13 @@ class CrontabInlayHintsProvider : InlayHintsProvider {
                 val text = QUOTES.fold(element.text) { acc, string -> StringUtil.unquoteString(acc, string) }
 
                 val crontabFile = CrontabElementFactory.createFile(element.project, text)
-                val expression = crontabFile.children.getOrNull(0) as? CrontabCronExpression ?: return
+                val expression = PsiTreeUtil.findChildOfType(crontabFile, CrontabCronExpression::class.java) ?: return
                 when {
                     expression.schedule.text != text -> return
                     text.startsWith("@") -> return
                 }
 
                 val schedules = PsiTreeUtil.findChildrenOfType(crontabFile, CrontabSchedule::class.java)
-//                println("schedules: ${schedules}")
 
                 if (schedules.isNotEmpty()) {
                     val text = CronScheduleDescriber.asHumanReadable(text).ifEmpty { return }
